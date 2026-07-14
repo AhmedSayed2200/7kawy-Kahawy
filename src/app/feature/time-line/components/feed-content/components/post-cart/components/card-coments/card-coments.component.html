@@ -1,0 +1,51 @@
+<section aria-label="Comments">
+  <!-- comment details  -->
+  <div class="flex gap-2 mb-4 group">
+    <img
+      [src]="comment.commentCreator.photo"
+      [alt]="comment.commentCreator.name"
+      class="w-9 h-9 rounded-full object-cover shrink-0 bg-slate-100 border border-slate-50"
+    />
+
+    <div class="flex-1 flex flex-col self-center items-start min-w-0">
+      <div class="bg-slate-100 rounded-2xl px-3.5 py-2.5 w-full">
+        <div class="flex items-center gap-1.5 mb-0.5">
+          <span class="text-[13px] font-bold text-slate-900 hover:underline cursor-pointer">{{
+            comment.commentCreator.name
+          }}</span>
+        </div>
+
+        <div class="flex items-center gap-1 text-[12px] text-slate-500 mb-1">
+          <span>@{{ comment.commentCreator.username }}</span>
+          <span>&middot;</span>
+          <span>{{ comment.createdAt }}</span>
+        </div>
+        @if (comment.content) {
+          <p class="text-[14px] text-slate-800 wrap-break-word">
+            {{ comment.content }}
+          </p>
+        }
+        @if (comment.image) {
+          <div>
+            <img
+              [src]="comment.image"
+              class="max-h-[200px] max-w-[200px] object-cover mt-5"
+              alt=""
+            />
+          </div>
+        }
+
+        <div class="flex items-center gap-3 mt-2 ms-1 text-[12px] text-slate-500 font-semibold">
+          <button class="cursor-pointer hover:underlin" (click)="isLiked = !isLiked">
+            @if (!isLiked) {
+              <i class="fa-regular fa-heart"></i> {{ comment.likes.length }}
+            } @else {
+              <i class="fa-solid text-red-500 fa-heart"></i> {{ comment.likes.length }}
+            }
+          </button>
+          <button class="cursor-pointer hover:underline">Reply {{ comment.repliesCount }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

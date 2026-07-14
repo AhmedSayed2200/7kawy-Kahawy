@@ -1,0 +1,11 @@
+#logo-img {
+  top: -36px;
+  left: -8px;
+}
+#check {
+  position: absolute;
+  width: 40%;
+  left: 10%;
+  top: 0;
+  z-index: -1;
+}

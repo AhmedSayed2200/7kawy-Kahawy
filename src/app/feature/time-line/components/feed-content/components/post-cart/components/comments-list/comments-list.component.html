@@ -1,0 +1,5 @@
+<section class="border border-slate-200 rounded-[16px] p-4 bg-white">
+  @for (comment of commentsList; track comment._id) {
+    <app-card-coments [comment]="comment"></app-card-coments>
+  }
+</section>

@@ -1,0 +1,344 @@
+<section class="min-h-screen flex flex-wrap justify-center items-center container">
+  <div id="check">
+    <img src="/images/lastman2.png" alt="" />
+  </div>
+  <div class="w-full lg:w-1/2 text-center lg:text-left lg:mt-0 mt-20 mb-5">
+    <h1 class="font-bold text-6xl">
+      <span><span class="text-mainColor">7</span>kawy</span> و
+      <span class="ps-30 block"><span class="text-mainColor">K</span>ahawy</span>
+    </h1>
+    <p class="font-specialFont py-7 w-full lg:w-4/5">
+      Ready to embark on a journey that transcends boundaries? Join us at "The World Today" virtual
+      event and let's create a brighter future together.
+    </p>
+    <div class="gap-x-4 justify-center lg:justify-start w-full flex mb-5 lg:mb-0">
+      <button
+        type="button"
+        class="py-2 px-5 w-[45%] max-w-md flex justify-center items-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
+      >
+        <svg
+          width="20"
+          height="20"
+          fill="currentColor"
+          class="mr-2"
+          viewBox="0 0 1792 1792"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M1343 12v264h-157q-86 0-116 36t-30 108v189h293l-39 296h-254v759h-306v-759h-255v-296h255v-218q0-186 104-288.5t277-102.5q147 0 228 12z"
+          ></path>
+        </svg>
+        Sign up with Facebook
+      </button>
+
+      <button
+        type="button"
+        class="py-2 px-4 w-[45%] max-w-md flex justify-center items-center bg-white hover:bg-gray-50 border border-gray-300 text-gray-700 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
+      >
+        <svg
+          width="20"
+          height="20"
+          fill="currentColor"
+          class="mr-2 text-red-500"
+          viewBox="0 0 1792 1792"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M896 786h725q12 67 12 128 0 217-91 387.5t-259.5 266.5-386.5 96q-157 0-299-60.5t-245-163.5-163.5-245-60.5-299 60.5-299 163.5-245 245-163.5 299-60.5q300 0 515 201l-209 201q-123-119-306-119-129 0-238.5 65t-173.5 176.5-64 243.5 64 243.5 173.5 176.5 238.5 65q87 0 160-24t120-60 82-82 51.5-87 22.5-78h-436v-264z"
+          ></path>
+        </svg>
+        Sign up with Google
+      </button>
+    </div>
+  </div>
+  <!-- <div id="check" class="w-1/2 p-0 m-0 bg-mainColor">
+    <img src="/images/bg.webp" width="100%"  alt="" />
+  </div> -->
+  <form
+    [formGroup]="registerForm"
+    (ngSubmit)="submitDate()"
+    class="bg-white w-full lg:w-1/2 py-10 flex flex-col gap-y-3 mb-20 lg:mb-0"
+  >
+    <h2 class="font-extrabold text-3xl w-3/4 text-center m-auto pb-5">Registration</h2>
+    <!--------- ---------- Full name ------------------------->
+
+    <div>
+      <div class="relative w-3/4 mx-auto mb-0">
+        <!-- [class]="getInputClasses('name')" -->
+        <input
+          formControlName="name"
+          type="text"
+          id="fullname"
+          class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border-1 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-gray-500 peer"
+          placeholder=" "
+        />
+        <label
+          for="fullname"
+          class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2 peer-focus:px-2 peer-focus:w-fit peer-focus:text-gray-500 peer-focus:bg-white peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+          ><i class="fa-solid fa-user pe-1"></i> full name
+        </label>
+      </div>
+
+      @if (registerForm.get('name')?.touched && registerForm.get('name')?.invalid) {
+        <div
+          class="flex w-3/4 mx-auto my-0 p-3 text-sm text-fg-danger-strong rounded-base bg-danger-soft border border-danger-subtle"
+          role="alert"
+        >
+          <span class="sr-only">Danger</span>
+          <div>
+            <ul class="list-disc list-outside space-y-1 ps-2.5">
+              @if (registerForm.get('name')?.hasError('required')) {
+                <li class="[word-spacing:2px]">Full Name is required.</li>
+              } @else if (registerForm.get('name')?.hasError('minlength')) {
+                <li>Name must be at least 3 characters</li>
+              } @else if (registerForm.get('name')?.hasError('maxlength')) {
+                <li>Name must be at most 30 characters</li>
+              }
+            </ul>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!--------- ---------- user name ------------------------->
+
+    <div>
+      <div class="relative w-3/4 m-auto">
+        <input
+          formControlName="username"
+          type="text"
+          id="username"
+          class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border-1 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-gray-500 peer"
+          placeholder=" "
+        />
+        <label
+          for="username"
+          class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2 peer-focus:px-2 peer-focus:w-fit peer-focus:text-gray-500 peer-focus:bg-white peer-focus:overflow-auto peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+          ><i class="fa-solid fa-user pe-1"></i> user name
+        </label>
+      </div>
+      @if (registerForm.get('username')?.touched && registerForm.get('username')?.invalid) {
+        <div
+          class="flex w-3/4 mx-auto my-0 p-3 text-sm text-fg-danger-strong rounded-base bg-danger-soft border border-danger-subtle"
+          role="alert"
+        >
+          <span class="sr-only">Danger</span>
+          <div>
+            <ul class="list-disc list-outside space-y-1 ps-2.5">
+              @if (registerForm.get('username')?.hasError('required')) {
+                <li class="[word-spacing:2px]">username is required.</li>
+              } @else if (registerForm.get('username')?.hasError('minlength')) {
+                <li>user name must be at least 3 characters</li>
+              } @else if (registerForm.get('username')?.hasError('maxlength')) {
+                <li>user name must be at most 30 characters</li>
+              }
+            </ul>
+          </div>
+        </div>
+      }
+    </div>
+    <!--------- ---------- email ------------------------->
+
+    <div>
+      <div class="relative w-3/4 m-auto">
+        <input
+          formControlName="email"
+          type="email"
+          id="email"
+          class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border-1 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-gray-500 peer"
+          placeholder=" "
+        />
+        <label
+          for="email"
+          class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2 peer-focus:px-2 peer-focus:w-fit peer-focus:text-gray-500 peer-focus:bg-white peer-focus:overflow-auto peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+          ><i class="fa-duotone fa-solid fa-at pe-1"></i> Email
+        </label>
+      </div>
+      @if (registerForm.get('email')?.touched && registerForm.get('email')?.invalid) {
+        <div
+          class="flex w-3/4 mx-auto my-0 p-3 text-sm text-fg-danger-strong rounded-base bg-danger-soft border border-danger-subtle"
+          role="alert"
+        >
+          <span class="sr-only">Danger</span>
+          <div>
+            <ul class="list-disc list-outside space-y-1 ps-2.5">
+              @if (registerForm.get('email')?.hasError('required')) {
+                <li class="[word-spacing:2px]">Email is required.</li>
+              } @else if (registerForm.get('email')?.hasError('email')) {
+                <li>Please enter a valid email address.</li>
+              }
+            </ul>
+          </div>
+        </div>
+      }
+    </div>
+    <!--------- ---------- password ------------------------->
+
+    <div>
+      <div class="relative w-3/4 m-auto">
+        <input
+          formControlName="password"
+          #pass
+          type="password"
+          id="password"
+          class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border-1 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-gray-500 peer"
+          placeholder=" "
+        />
+        <label
+          for="password"
+          class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2 peer-focus:px-2 peer-focus:w-fit peer-focus:text-gray-500 peer-focus:bg-white peer-focus:overflow-auto peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+          ><i class="fa-solid fa-key pe-1"></i> Password
+        </label>
+        @if (registerForm.get('password')?.value) {
+          <span
+            class="absolute top-[50%] end-5 translate-y-[-50%] text-gray-500 cursor-pointer"
+            (click)="disbalypassword(pass)"
+            ><i [class]="pass.type === 'password' ? 'fa-eye-slash' : 'fa-eye'" class="fa-solid"></i
+          ></span>
+        }
+      </div>
+
+      @if (registerForm.get('password')?.touched && registerForm.get('password')?.invalid) {
+        <div
+          class="flex w-3/4 mx-auto my-0 p-3 text-sm text-fg-danger-strong rounded-base bg-danger-soft border border-danger-subtle"
+          role="alert"
+        >
+          <span class="sr-only">Danger</span>
+          <div>
+            <ul class="list-disc list-outside space-y-1 ps-2.5">
+              @if (registerForm.get('password')?.hasError('required')) {
+                <li class="[word-spacing:2px]">password is required.</li>
+              } @else if (registerForm.get('password')?.hasError('pattern')) {
+                <li>
+                  must contain at least 8 chars, 1 uppercase, 1 lowercase, 1 number, and 1 special
+                </li>
+              }
+            </ul>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!--------- ---------- rePassword ------------------------->
+
+    <div>
+      <div class="relative w-3/4 m-auto">
+        <input
+          #repassword
+          formControlName="rePassword"
+          type="password"
+          id="repassword"
+          class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border-1 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-gray-500 peer"
+          placeholder=" "
+        />
+        <label
+          for="repassword"
+          class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2 peer-focus:px-2 peer-focus:w-fit peer-focus:text-gray-500 peer-focus:bg-white peer-focus:overflow-auto peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+          ><i class="fa-solid fa-key pe-1"></i> Confirm Password
+        </label>
+        @if (registerForm.get('rePassword')?.value) {
+          <span
+            class="absolute top-[50%] end-5 translate-y-[-50%] text-gray-500 cursor-pointer"
+            (click)="disbalypassword(repassword)"
+            ><i
+              [class]="repassword.type === 'password' ? 'fa-eye-slash' : 'fa-eye'"
+              class="fa-solid"
+            ></i
+          ></span>
+        }
+      </div>
+      @if (registerForm.get('rePassword')?.touched && registerForm.get('rePassword')?.invalid) {
+        <div
+          class="flex w-3/4 mx-auto my-0 p-3 text-sm text-fg-danger-strong rounded-base bg-danger-soft border border-danger-subtle"
+          role="alert"
+        >
+          <span class="sr-only">Danger</span>
+          <div>
+            <ul class="list-disc list-outside space-y-1 ps-2.5">
+              @if (registerForm.get('rePassword')?.hasError('required')) {
+                <li class="[word-spacing:2px]">Please confirm your password.</li>
+              } @else if (registerForm.get('rePassword')?.hasError('mismatch')) {
+                <li>Passwords do not match.</li>
+              }
+            </ul>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!--------- --- dateOfBirthday && gender ------------------------->
+
+    <div class="flex gap-2 w-3/4 m-auto">
+      <!--------- --- dateOfBirthday------------------------->
+      <div class="w-1/2">
+        <div class="relative">
+          <input
+            formControlName="dateOfBirth"
+            type="date"
+            id="date"
+            class="block px-3 w-[100%] pb-2.5 pt-3 text-sm text-heading bg-transparent rounded-base border-1 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-gray-500 peer [&::-webkit-datetime-edit-text]:text-gray-500 [&::-webkit-datetime-edit-month-field]:text-gray-500 [&::-webkit-datetime-edit-day-field]:text-gray-500 [&::-webkit-datetime-edit-year-field]:text-gray-500 [&::-webkit-calendar-picker-indicator]:opacity-50"
+            placeholder=" "
+          />
+          <label
+            for="date"
+            class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2 peer-focus:px-2 peer-focus:w-fit peer-focus:text-gray-500 peer-focus:bg-white peer-focus:overflow-auto peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+          >
+          </label>
+        </div>
+        @if (registerForm.get('dateOfBirth')?.touched && registerForm.get('dateOfBirth')?.invalid) {
+          <div
+            class="flex w-full mx-auto my-0 p-3 text-sm text-fg-danger-strong rounded-base bg-danger-soft border border-danger-subtle"
+            role="alert"
+          >
+            <span class="sr-only">Danger</span>
+            <div>
+              <ul>
+                <li class="[word-spacing:2px]">enter your birthday.</li>
+              </ul>
+            </div>
+          </div>
+        }
+      </div>
+      <!--------- --- --- gender ------------------------->
+      <div class="w-1/2">
+        <select
+          formControlName="gender"
+          class="border-gray-200 cursor-pointer w-full rounded-[10px] focus:outline-none focus:ring-0 focus:border-danger-2 text-gray-500 invalid:text-gray-400"
+        >
+          <option value="" selected disabled hidden>Select gender</option>
+          <option value="male" class="text-black">male</option>
+          <option value="female" class="text-black">female</option>
+        </select>
+        @if (registerForm.get('gender')?.touched && registerForm.get('gender')?.invalid) {
+          <div
+            class="flex w-full mx-auto my-0 p-3 text-sm text-fg-danger-strong rounded-base bg-danger-soft border border-danger-subtle"
+            role="alert"
+          >
+            <span class="sr-only">Danger</span>
+            <div>
+              <ul>
+                <li class="[word-spacing:2px]">Please enter your gender.</li>
+              </ul>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+    <!--------- ---------- button  ------------------------->
+
+    <button
+      type="submit"
+      [disabled]="loading"
+      class="bg-mainColor text-white rounded-[.5rem] p-3 w-3/4 m-auto cursor-pointer"
+    >
+      Create New Acount
+      @if (loading) {
+        <i class="fa-solid fa-spinner animate-spin"></i>
+      }
+    </button>
+    <p class="bg-red-500 text-sm w-3/4 m-auto text-center">{{ msgError }}</p>
+    <p class="text-center my-1 w-3/4 m-auto">
+      Already have an account? <a class="text-blue-500" routerLink="/login">Sing In </a>
+    </p>
+  </form>
+</section>

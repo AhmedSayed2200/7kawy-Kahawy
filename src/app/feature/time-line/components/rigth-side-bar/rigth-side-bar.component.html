@@ -1,0 +1,90 @@
+<button
+  data-drawer-target="right-friends-sidebar"
+  data-drawer-toggle="right-friends-sidebar"
+  data-drawer-placement="right"
+  aria-controls="right-friends-sidebar"
+  type="button"
+  class="text-blue-700 bg-transparent box-border border border-transparent hover:bg-neutral-secondary-medium focus:ring-4 focus:ring-neutral-tertiary font-medium leading-5 rounded-base ms-3 mt-3 fixed top-[10px] z-50 left-[16%] md:left-[12%] text-sm p-2 focus:outline-none inline-flex md:hidden"
+>
+  <span class="sr-only">Open sidebar</span>
+  <i class="fa-solid fa-user-plus text-2xl text-heading"></i>
+</button>
+
+<aside
+  id="right-friends-sidebar"
+  class="md:sticky fixed top-[16%] z-40 h-screen transition-transform translate-x-full md:translate-x-0"
+  aria-label="Sidebar"
+  tabindex="-1"
+>
+  <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-4 font-sans overflow-y-auto">
+    <div class="flex items-center justify-between mb-4 px-1">
+      <div class="flex items-center gap-2">
+        <i class="fa-solid fa-user-group text-blue-600 text-[1.1rem]"></i>
+        <h2 class="font-bold text-slate-900 text-[17px]">Suggested Friends</h2>
+      </div>
+
+      <button
+        data-drawer-hide="right-friends-sidebar"
+        aria-controls="right-friends-sidebar"
+        type="button"
+        class="md:hidden p-2 rounded-lg hover:bg-slate-100"
+      >
+        <i class="fa-solid fa-xmark"></i>
+        <span class="sr-only">Close menu</span>
+      </button>
+    </div>
+
+    <div class="relative mb-4">
+      <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+        <i class="fa-solid fa-magnifying-glass text-slate-400 text-sm"></i>
+      </div>
+      <input
+        type="text"
+        class="bg-white border border-slate-200 text-slate-800 text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 placeholder-slate-400 outline-none"
+        placeholder="Search friends..."
+      />
+    </div>
+
+    <div class="grid gap-3 overflow-y-auto">
+      <div
+        class="p-3 border border-slate-200 rounded-2xl bg-white hover:border-slate-300 transition-colors"
+      >
+        <div class="flex items-start gap-3">
+          <img
+            src="https://i.pravatar.cc/150?img=11"
+            class="w-11 h-11 rounded-full object-cover border"
+          />
+          <div class="flex-1 min-w-0 flex flex-col gap-2">
+            <div class="flex items-center justify-between gap-2">
+              <div class="min-w-0">
+                <span class="block text-[14px] font-bold truncate"> Ahmed Bahnasy </span>
+                <span class="block text-[13px] text-slate-500 truncate"> @bahnasy20222 </span>
+              </div>
+              <button
+                class="flex items-center gap-1.5 px-3.5 py-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 text-[13px] font-bold rounded-xl"
+              >
+                <i class="fa-solid fa-user-plus text-[11px]"></i> Follow
+              </button>
+            </div>
+            <div class="flex gap-2">
+              <span
+                class="text-[11px] font-semibold text-slate-500 bg-slate-100 px-2 py-1 rounded-lg"
+              >
+                41 followers
+              </span>
+              <span class="text-[11px] font-semibold text-blue-500 bg-blue-50 px-2 py-1 rounded-lg">
+                2 mutual
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button
+      class="w-full mt-3 py-2.5 bg-white border border-slate-200 rounded-xl text-[14px] font-bold text-slate-700 hover:bg-slate-50"
+    >
+      View more
+    </button>
+  </div>
+</aside>

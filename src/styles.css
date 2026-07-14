@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'tailwindcss'; /* You can add global styles to this file, and also import other style files */
+@import 'flowbite/src/themes/default';
+@plugin "flowbite/plugin";
+@source "../node_modules/flowbite";
+
+@theme {
+  --color-mainColor: #00298d;
+  --color-secondColor: #f0f2f5;
+  --font-specialFont: 'Lobster', sans-serif;
+}
+@utility container {
+  margin: auto;
+}
+body {
+  background-color: var(--color-secondColor);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+input[type='password']::-ms-reveal {
+  display: none;
+}
+input[type='password']::-ms-clear {
+  display: none;
+}

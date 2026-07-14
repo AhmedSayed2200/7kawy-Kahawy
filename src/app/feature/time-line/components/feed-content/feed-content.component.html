@@ -1,0 +1,8 @@
+<section>
+  <!-- ----creat post--- -->
+  <app-creat-post (eventEmitter)="reDrawing()"></app-creat-post>
+  <!--------list posts ------->
+  @for (post of postList; track post._id) {
+    <app-post-cart (eventEmitter)="reDrawing()" [post]="post"></app-post-cart>
+  }
+</section>
