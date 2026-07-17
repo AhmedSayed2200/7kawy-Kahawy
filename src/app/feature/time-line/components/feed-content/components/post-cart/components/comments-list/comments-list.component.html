@@ -1,5 +1,14 @@
 <section class="border border-slate-200 rounded-[16px] p-4 bg-white">
   @for (comment of commentsList; track comment._id) {
-    <app-card-coments [comment]="comment"></app-card-coments>
+    <app-card-coments
+      (eventEmitterComment)="getPostComments(comment.post)"
+      [comment]="comment"
+    ></app-card-coments>
+  } @empty {
+    <div class="w-full flex flex-col items-center justify-center py-1 text-center">
+      <p class="text-gray-500 font-medium">
+        No comments yet. Be the first to share your thoughts!.
+      </p>
+    </div>
   }
 </section>

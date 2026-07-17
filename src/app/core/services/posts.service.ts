@@ -15,8 +15,8 @@ export class PostsService {
       }
     }
 
-  getallposts(): Observable<any>{
-    return this.httpClient.get(environment.baseUrl+"/posts",this.headers)
+  getallposts(pageNumber:number): Observable<any>{
+    return this.httpClient.get(environment.baseUrl+`/posts?page=${pageNumber}`,this.headers)
   }
 
     creatPosts(body:object): Observable<any>{
@@ -26,4 +26,23 @@ export class PostsService {
       return this.httpClient.delete(environment.baseUrl+"/posts/"+postId,this.headers)
   }
 
+  getLikesPost(postId:string): Observable<any>{
+    return this.httpClient.get(environment.baseUrl+`/posts/${postId}/likes?page=1&limit=20`,this.headers)
+  }
+  
+  followUnfollow(userId:string): Observable<any>{
+   return this.httpClient.put(environment.baseUrl+`/users/${userId}/follow`,{},this.headers)
+  }
+
+  likeUnLink(postId:string): Observable<any>{
+    return this.httpClient.put(environment.baseUrl+`/posts/${postId}/like`,{},this.headers) 
+  }
+  
+  bookmarkUnBookmark(postId:string): Observable<any>{
+    return this.httpClient.put(environment.baseUrl+`/posts/${postId}/bookmark`,{},this.headers) 
+  }
+
+  getAllBookMaks(): Observable<any>{
+    return this.httpClient.get(environment.baseUrl+"/users/bookmarks",this.headers)
+  }
 }

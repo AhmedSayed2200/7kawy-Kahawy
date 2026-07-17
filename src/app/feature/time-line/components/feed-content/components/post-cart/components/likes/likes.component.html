@@ -1,0 +1,90 @@
+<section>
+  @if (isOpen) {
+    @if (liksList.length) {
+      <div
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 transition-all duration-300"
+      >
+        <div
+          class="w-full max-w-[400px] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden transition-all duration-300 scale-100"
+        >
+          <div class="relative flex items-center justify-between p-4 border-b border-gray-200">
+            <div class="flex items-center gap-1">
+              <i class="fa-solid fa-user-group text-[#0095f6]"></i>
+              <h3 class="font-bold text-[16px] text-gray-900">Likes</h3>
+            </div>
+            <button
+              (click)="closeLinksLayer()"
+              class="text-gray-600 hover:text-black transition-colors duration-200 cursor-pointer"
+            >
+              <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+          </div>
+          <div class="">
+            @for (like of liksList; track like._id) {
+              <div class="flex-1 mb-1 overflow-y-auto p-4 space-y-4 bg-gray-600">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-full p-[2px]">
+                      <img
+                        [src]="like.photo"
+                        [alt]="like.name"
+                        class="w-full h-full object-cover rounded-full border-2 border-white"
+                      />
+                    </div>
+                    <div class="flex flex-col">
+                      <div class="flex items-center gap-1">
+                        <span
+                          class="font-bold text-[14px] text-gray-900 cursor-pointer hover:underline"
+                          >{{ like.name }}</span
+                        >
+                      </div>
+                      <span class="text-[15px] text-heading">@{{ like.username }}</span>
+                    </div>
+                  </div>
+                  <button
+                    (click)="followUnfollow(like._id)"
+                    [class]="
+                      isFollow
+                        ? 'bg-white text-heading border border-black '
+                        : 'bg-[#0095f6] text-white hover:bg-[#1877f2] transition-colors'
+                    "
+                    class="px-4 py-1.5 text-[13px] font-semibold rounded-lg cursor-pointer"
+                  >
+                    {{ followUnf }}
+                  </button>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    } @else if (!this.isLoading && !liksList.length) {
+      <div class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm transition-all duration-300">
+        <div class="bg-white rounded-2xl w-fit absolute top-1/2 left-1/2 -translate-1/2">
+          <div class="flex flex-col items-center justify-center text-center p-6 max-w-sm mx-auto">
+            <div
+              class="relative flex items-center justify-center w-28 h-28 rounded-full bg-[#0A37A5]/5"
+            >
+              <div class="flex items-center justify-center w-20 h-20 rounded-full bg-[#0A37A5]/10">
+                <i class="fa-solid fa-heart text-4xl text-[#0A37A5]"></i>
+              </div>
+            </div>
+
+            <h2 class="text-xl font-bold text-gray-900 my-3">No likes yet</h2>
+
+            <p class="text-[14px] text-gray-500 mt-2 max-w-[280px] leading-relaxed">
+              Where you can connect with people who matter to you, not just those who like you.
+            </p>
+
+            <button
+              (click)="closeLinksLayer()"
+              class="w-full max-w-[240px] py-3 mt-6 bg-[#0A37A5] hover:bg-[#082e8a] text-white font-semibold rounded-2xl transition-all duration-200 cursor-pointer text-[15px] shadow-sm"
+            >
+              close
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+  }
+</section>

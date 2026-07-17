@@ -21,9 +21,29 @@ export class CommentsService {
   }
 
     creatComment(postId:string,body:object): Observable<any>{
-    console.log(environment.baseUrl+"/posts/"+postId)
     return this.httpClient.post(environment.baseUrl+"/posts/"+postId+"/comments",body,this.headers)
   }
+    likeUnLinkComment(postId:string,commentId:string): Observable<any>{
+    return this.httpClient.put(environment.baseUrl+`/posts/${postId}/comments/${commentId}/like`,{},this.headers) 
+  }
+
+  deleteComment(postId:string,commentId:string): Observable<any>{
+    return this.httpClient.delete(environment.baseUrl+`/posts/${postId}/comments/${commentId}`,this.headers) 
+  }
+
+  getCommentReplies(postId:string,commentId:string): Observable<any>{
+    return this.httpClient.get(environment.baseUrl+`/posts/${postId}/comments/${commentId}/replies?page=1&limit=10`,this.headers)
+  }
+
+  createReply(postId:string,commentId:string,body:object): Observable<any>{
+    return this.httpClient.post(environment.baseUrl+`/posts/${postId}/comments/${commentId}/replies`,body,this.headers)
+  }
+
+   updateComment(postId:string,commentId:string,body:object): Observable<any>{
+    return this.httpClient.put(environment.baseUrl+`/posts/${postId}/comments/${commentId}`,body,this.headers)
+  }
+
+
 
 }
 

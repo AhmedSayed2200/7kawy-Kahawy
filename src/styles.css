@@ -21,3 +21,11 @@ input[type='password']::-ms-reveal {
 input[type='password']::-ms-clear {
   display: none;
 }
+/* إخفاء الـ scrollbar عشان يظهر التصميم متناسق وسلس */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}

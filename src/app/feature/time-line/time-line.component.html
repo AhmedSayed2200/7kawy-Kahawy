@@ -1,8 +1,13 @@
-<section class="flex gap-3 container min-h-screen">
+<section class="flex gap-3 min-h-screen">
   <!------  left side bar  ------->
   <app-left-side-bar></app-left-side-bar>
+
+  <div class="flex-1">
+    <router-outlet></router-outlet>
+  </div>
+
   <!---------- post ------- -->
-  <app-feed-content class="flex-1"></app-feed-content>
+  <!-- <app-feed-content class="flex-1"></app-feed-content> -->
   <!-- right-side-bar ------>
-  <app-rigth-side-bar></app-rigth-side-bar>
+  <app-rigth-side-bar class="md:w-[25%]"></app-rigth-side-bar>
 </section>

@@ -29,6 +29,7 @@ export class CommentsListComponent implements OnInit  {
         this.CommentsService.getPostsComments(postId).subscribe({
       next: (res)=> {
        this.commentsList=res.data.comments;
+       console.log(res);
       },
       error: (err)=> {
         console.log(err);

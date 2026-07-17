@@ -1,14 +1,16 @@
 
-export interface Icomments {
+export interface IReplies {
   _id: string;
   content: string;
   image: string;
   commentCreator: CommentCreator;
   post: string;
-  parentComment: string|null;
+  parentComment: string;
   likes: any[];
   createdAt: string;
-  repliesCount?: number;
+  likesCount: number;
+  isReply: boolean;
+  id: string;
 }
 
 export interface CommentCreator {
@@ -16,4 +18,8 @@ export interface CommentCreator {
   name: string;
   username: string;
   photo: string;
+  followersCount: number;
+  followingCount: number;
+  bookmarksCount: number;
+  id: string;
 }

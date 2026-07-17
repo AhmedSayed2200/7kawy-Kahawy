@@ -5,4 +5,11 @@
   @for (post of postList; track post._id) {
     <app-post-cart (eventEmitter)="reDrawing()" [post]="post"></app-post-cart>
   }
+  <div #anchor class="h-10 flex items-center justify-center mt-4">
+    @if (isLoading) {
+      <div class="text-xs text-gray-400 animate-pulse">Loading more posts...</div>
+    } @else if (!hasMore) {
+      <div class="text-xs text-gray-400">No more posts available.</div>
+    }
+  </div>
 </section>

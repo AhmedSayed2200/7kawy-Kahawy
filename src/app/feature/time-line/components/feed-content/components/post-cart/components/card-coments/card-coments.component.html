@@ -8,44 +8,213 @@
     />
 
     <div class="flex-1 flex flex-col self-center items-start min-w-0">
-      <div class="bg-slate-100 rounded-2xl px-3.5 py-2.5 w-full">
-        <div class="flex items-center gap-1.5 mb-0.5">
-          <span class="text-[13px] font-bold text-slate-900 hover:underline cursor-pointer">{{
-            comment.commentCreator.name
-          }}</span>
-        </div>
+      @if (!isEditaing) {
+        <div class="bg-slate-100 rounded-2xl px-3.5 py-2.5 w-full">
+          <div class="flex justify-between">
+            <div>
+              <div class="flex items-center gap-1.5 mb-0.5">
+                <span class="text-[13px] font-bold text-slate-900 hover:underline cursor-pointer">{{
+                  comment.commentCreator.name
+                }}</span>
+              </div>
 
-        <div class="flex items-center gap-1 text-[12px] text-slate-500 mb-1">
-          <span>@{{ comment.commentCreator.username }}</span>
-          <span>&middot;</span>
-          <span>{{ comment.createdAt }}</span>
-        </div>
-        @if (comment.content) {
-          <p class="text-[14px] text-slate-800 wrap-break-word">
-            {{ comment.content }}
-          </p>
-        }
-        @if (comment.image) {
-          <div>
-            <img
-              [src]="comment.image"
-              class="max-h-[200px] max-w-[200px] object-cover mt-5"
-              alt=""
-            />
-          </div>
-        }
+              <div class="flex items-center gap-1 text-[12px] text-slate-500 mb-1">
+                <span class="me-0.5">@{{ comment.commentCreator.username }}</span>
 
-        <div class="flex items-center gap-3 mt-2 ms-1 text-[12px] text-slate-500 font-semibold">
-          <button class="cursor-pointer hover:underlin" (click)="isLiked = !isLiked">
-            @if (!isLiked) {
-              <i class="fa-regular fa-heart"></i> {{ comment.likes.length }}
-            } @else {
-              <i class="fa-solid text-red-500 fa-heart"></i> {{ comment.likes.length }}
+                <span>{{ comment.createdAt | date: 'shortTime' }}</span>
+              </div>
+            </div>
+            @if (comment.commentCreator._id == userId) {
+              <div class="relative">
+                <button
+                  id="dropdownMenuIconButtonComment"
+                  class="text-heading peer/comment transition-all box-border border border-transparent hover:bg-neutral-secondary-medium focus:ring-4 focus:ring-neutral-tertiary font-medium leading-5 rounded-base text-sm p-2 focus:outline-none"
+                  type="button"
+                >
+                  <i class="fa-solid fa-ellipsis-vertical cursor-pointer text-[#45556C]"></i>
+                </button>
+
+                <!-- Dropdown menu -->
+                <div
+                  id="dropdownDotsComment"
+                  class="z-30 hidden peer-hover/comment:block hover:block absolute top-[60%] end-0 mt-0.5 bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-fit"
+                >
+                  <ul
+                    class="p-2 text-sm text-body font-medium"
+                    aria-labelledby="dropdownMenuIconButtonComment"
+                  >
+                    <li>
+                      <button
+                        type="button"
+                        (click)="editComment()"
+                        class="inline-flex items-center text-[13px] w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
+                      >
+                        <i class="fa-solid text-[10px] mt-1 me-2 fa-rotate"></i>
+                        Edit
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        type="button"
+                        (click)="deleteCommet(comment.post, comment._id, comment.parentComment)"
+                        class="inline-flex text-[13px] text-red-700 items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
+                      >
+                        <i class="fa-solid text-[10px] mt-1 me-2 fa-delete-left"></i>
+                        Delete
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             }
-          </button>
-          <button class="cursor-pointer hover:underline">Reply {{ comment.repliesCount }}</button>
+          </div>
+          @if (comment.content) {
+            <p class="text-[14px] text-slate-800 wrap-break-word">
+              {{ comment.content }}
+            </p>
+          }
+          @if (comment.image) {
+            <div>
+              <img
+                [src]="comment.image"
+                class="max-h-[200px] max-w-[200px] object-cover mt-5"
+                alt=""
+              />
+            </div>
+          }
+          <div class="flex items-center gap-1 mt-2 ms-1 text-[12px] text-slate-500 font-semibold">
+            <button
+              class="cursor-pointer hover:underlin hover:bg-slate-50 p-1 rounded-lg transition-colors"
+              (click)="likeUnLinkComment(comment.post, comment._id)"
+            >
+              @if ((!isLikeClicked && !isLikedBefore) || (isLikeClicked && isLikedBefore)) {
+                <i class="fa-regular fa-heart"></i>
+              } @else {
+                <i class="fa-solid text-red-500 fa-heart"></i>
+              }
+              {{ comment.likes.length }}
+            </button>
+            <button
+              class="cursor-pointer font-semibold text-[14px] hover:bg-slate-50 p-1 rounded-lg transition-colors"
+            >
+              <i class="fa-regular fa-comment fa-flip-horizontal"></i>
+              @if (comment.repliesCount) {
+                {{ comment.repliesCount }}
+              } @else {
+                0
+              }
+            </button>
+            <button
+              #replyElement
+              (click)="getCommentReplies(comment.post, comment._id)"
+              class="cursor-pointer hover:underline"
+            >
+              @if (!IsDisplayReplies) {
+                Reply
+              } @else {
+                hide reply
+              }
+            </button>
+          </div>
         </div>
-      </div>
+      }
+      <!--editing comment  -->
+      @else {
+        <form (submit)="sendComment($event, comment.post, comment._id)">
+          <div class="flex">
+            <input
+              [formControl]="commentContentEditing"
+              class="rounded-full w-fit h-8 mt-2"
+              [(ngModel)]="contentComment"
+              type="text"
+            />
+            <div class="mt-2 ms-2">
+              <button
+                type="submit"
+                (click)="saveEditing()"
+                class="bg-blue-500 text-white hover:bg-blue-700 px-4 py-1 me-2 rounded-full"
+              >
+                Save
+              </button>
+              <button
+                type="button"
+                (click)="cancelEditing()"
+                class="bg-red-500 hover:bg-red-600 px-4 py-1 rounded-full"
+              >
+                cancel
+              </button>
+            </div>
+          </div>
+          <div class="flex ms-2 mt-2">
+            <div>
+              <input
+                #elementCommentEditing
+                type="file"
+                id="elementCommentEditing"
+                (change)="imgCommentEditing(elementCommentEditing)"
+                class="hidden"
+              />
+              <label
+                for="elementCommentEditing"
+                class="flex cursor-pointer items-center gap-2 text-slate-600 hover:bg-slate-50 px-2 py-1.5 rounded-lg transition-colors group"
+              >
+                <i
+                  class="fa-regular fa-image text-[#22c55e] text-[1.1rem] group-hover:scale-110 transition-transform"
+                ></i>
+              </label>
+            </div>
+
+            <div>
+              <button
+                id="emojiMenuButtonEditing"
+                data-dropdown-toggle="emojiDropdownEditing"
+                data-dropdown-placement="bottom-start"
+                class="flex items-center cursor-pointer gap-2 p-1 hover:bg-slate-100 rounded-lg text-md font-medium"
+                type="button"
+              >
+                😊
+              </button>
+
+              <div id="emojiDropdownEditing" class="z-40 hidden bg-white rounded-lg shadow-lg">
+                <emoji-mart
+                  (emojiSelect)="addEmojiEditing($event)"
+                  title="Pick your emoji…"
+                  emoji="point_up"
+                >
+                </emoji-mart>
+              </div>
+            </div>
+          </div>
+          @if (comment.image) {
+            <div>
+              <img
+                [src]="comment.image"
+                class="max-h-[200px] max-w-[200px] object-cover mt-5"
+                alt=""
+              />
+            </div>
+          }
+        </form>
+      }
     </div>
   </div>
+  @if (IsDisplayReplies) {
+    <div class="w-[90%] ms-12 relative flex flex-col gap-4">
+      @for (reply of repliesList; track reply.id; let isLast = $last) {
+        <div class="relative pl-6">
+          <span class="absolute left-0 top-0 h-full w-[2px] bg-slate-200 transition-colors"> </span>
+
+          <span class="absolute left-0 top-6 w-6 h-[2px] bg-slate-200"></span>
+          <app-card-coments
+            (eventEmitterReplies)="getCommentReplies(comment.post, comment._id, true)"
+            [comment]="reply"
+          ></app-card-coments>
+        </div>
+      }
+      <app-replies
+        (eventEmitter)="getCommentReplies(comment.post, comment._id, true)"
+        [comment]="comment"
+      ></app-replies>
+    </div>
+  }
 </section>

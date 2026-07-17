@@ -1,0 +1,7 @@
+@for (post of postList; track post._id) {
+  <app-post-cart
+    (EventEmitterBookmarks)="getAllBookMaks()"
+    [isFromBookmarks]="true"
+    [post]="post"
+  ></app-post-cart>
+}

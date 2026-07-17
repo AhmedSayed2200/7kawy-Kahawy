@@ -9,6 +9,10 @@ import { ProfileComponent } from './feature/profile/profile.component';
 import { NotFoundComponent } from './feature/not-found/not-found.component';
 import { forwardGuard } from './core/Auth/guards/forward-guard';
 import { backwardGuard } from './core/Auth/guards/backward-guard';
+import { ChangePasswordComponent } from './feature/change-password/change-password.component';
+import { FeedContentComponent } from './feature/time-line/components/feed-content/feed-content.component';
+import { SuggestionsFriendsComponent } from './feature/time-line/components/suggestions-friends/suggestions-friends.component';
+import { BookMarksComponent } from './feature/time-line/components/book-marks/book-marks.component';
 
 export const routes: Routes = [
     {
@@ -27,12 +31,25 @@ export const routes: Routes = [
     {
         path: "",component:MainLayoutComponent,canActivate:[forwardGuard],children: [
             {
-                path: "time-line",component:TimeLineComponent,title:"Time Line"
+             path: "",component:TimeLineComponent,children:[
+                    {
+                        path: "time-line",component:FeedContentComponent,title:"Time Line"
+                    },
+                    {
+                        path: "suggestions-Friends",component:SuggestionsFriendsComponent,title:"suggestions Friends"
+                    },
+                    {
+                        path: "saved-posts",component:BookMarksComponent,title:"BookMarks",
+                    }
+                ]
             },
-                        {
+            {
                 path: "notification",component:NotificationComponent,title:"Notification"
             },            {
                 path: "profile",component:ProfileComponent,title:"Profile"
+            },
+            {
+                path: "Change Password",component:ChangePasswordComponent,title:"Change Password"
             }
         ]
     },

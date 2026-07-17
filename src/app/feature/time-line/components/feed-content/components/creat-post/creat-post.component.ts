@@ -70,7 +70,7 @@ export class CreatPostComponent {
   }
 
     getAllPosts(){
-    this.postsService.getallposts().subscribe({
+    this.postsService.getallposts(1).subscribe({
       next:(res) => {
         this.postList = res.data.posts
         console.log(this.postList);

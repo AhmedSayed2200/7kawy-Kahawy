@@ -14,32 +14,33 @@
             class="text-[15px] font-bold text-slate-900 leading-tight hover:underline cursor-pointer"
             >{{ post.user.name }}
           </span>
-          <div class="flex items-center text-[13px] text-slate-500 mt-0.5 gap-1">
-            <span class="hover:underline cursor-pointer">{{ post.createdAt }}</span>
+          <div class="flex items-center text-[13px] text-gray-700 mt-0.5 gap-1">
+            <span class="hover:underline me-1 cursor-pointer"
+              >{{ post.createdAt | date: 'shortTime' }}
+            </span>
             @switch (post.privacy) {
               @case ('public') {
-                <i class="fa-solid text-heading fa-earth-americas text-[13px]"></i>
-                <span class="text-heading text-[13.5px]">Public</span>
+                <i class="fa-solid text-gray-700 fa-earth-americas text-[13px]"></i>
+                <span class="text-gray-700 text-[13.5px]">Public</span>
               }
               @case ('followers') {
-                <i class="fa-solid text-heading fa-users text-[13px]"></i>
-                <span class="text-heading text-[13.5px]">Followers</span>
+                <i class="fa-solid text-gray-700 fa-users text-[13px]"></i>
+                <span class="text-gray-700 text-[13.5px]">Followers</span>
               }
               @case ('only_me') {
-                <i class="fa-solid text-heading fa-lock text-[11.5px]"></i>
-                <span class="text-heading text-[13.5px]">Only me</span>
+                <i class="fa-solid text-gray-700 fa-lock text-[11.5px]"></i>
+                <span class="text-gray-700 text-[13.5px]">Only me</span>
               }
             }
           </div>
         </div>
       </div>
 
-      <div class="relative group">
+      <!-- delete update save post  -->
+      <div class="relative">
         <button
           id="dropdownMenuIconButton"
-          data-dropdown-toggle="dropdownDots"
-          data-dropdown-offset-skidding="100"
-          class="text-heading bg-neutral-primary box-border border border-transparent hover:bg-neutral-secondary-medium focus:ring-4 focus:ring-neutral-tertiary font-medium leading-5 rounded-base text-sm p-2 focus:outline-none"
+          class="text-heading peer bg-neutral-primary box-border border border-transparent hover:bg-neutral-secondary-medium focus:ring-4 focus:ring-neutral-tertiary font-medium leading-5 rounded-base text-sm p-2 focus:outline-none"
           type="button"
         >
           <i class="fa-solid fa-gear cursor-pointer text-[#45556C]"></i>
@@ -48,29 +49,41 @@
         <!-- Dropdown menu -->
         <div
           id="dropdownDots"
-          class="z-30 hidden group-hover:block absolute top-[90%] end-0 mt-1 bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44"
+          class="z-30 hidden peer-hover:block hover:block absolute top-[90%] end-0 mt-0.5 bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-[140px]"
         >
           <ul class="p-2 text-sm text-body font-medium" aria-labelledby="dropdownMenuIconButton">
             <li>
               <button
+                (click)="bookmarkUnBookmark(post._id)"
                 class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
               >
-                <i class="fa-regular text-[13px] mt-0.5 me-0.5 fa-bookmark"></i>
-                Save Post
+                @if (
+                  (!post.bookmarked && !isBookMarkChecked) || (post.bookmarked && isBookMarkChecked)
+                ) {
+                  <div class="">
+                    <i class="fa-regular text-[13px] mt-0.5 me-2 fa-bookmark"></i>
+                    Save Post
+                  </div>
+                } @else {
+                  <div class="text-red-500">
+                    <i class="fa-solid fa-x text-[10px] me-1 mt-1"></i>
+                    Un Saved
+                  </div>
+                }
               </button>
 
               @if (post.user._id == userId) {
                 <button
                   class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
                 >
-                  <i class="fa-solid text-[13px] mt-0.5 me-0.5 fa-rotate"></i>
+                  <i class="fa-solid text-[13px] mt-0.5 me-2 fa-rotate"></i>
                   Edit post
                 </button>
                 <button
                   (click)="deletePost(post._id)"
                   class="inline-flex text-red-700 items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
                 >
-                  <i class="fa-solid text-[13px] mt-0.5 me-0.5 fa-delete-left"></i>
+                  <i class="fa-solid text-[13px] mt-0.5 me-2 fa-delete-left"></i>
                   Delete post
                 </button>
               }
@@ -92,9 +105,13 @@
     <!-- like share comments  counts & view details -->
     <div class="flex items-center justify-between text-[13px] text-slate-500 mb-3 px-1">
       <div class="flex items-center gap-3">
-        <span class="cursor-pointer hover:underline">{{ post.likesCount }} loves</span>
+        <span (click)="displayLinkList()" class="cursor-pointer hover:underline"
+          >{{ post.likesCount }} loves</span
+        >
         <span class="cursor-pointer hover:underline">{{ post.commentsCount }} comments</span>
-        <button class="font-semibold cursor-pointer text-blue-600 hover:underline">
+        <button
+          class="font-semibold cursor-pointer text-blue-600 hover:text-blue-800 hover:underline"
+        >
           View details
         </button>
       </div>
@@ -106,18 +123,18 @@
     <div class="flex justify-between">
       <div class="flex items-center gap-2 px-1 py-1">
         <button
-          (click)="isChecked = !isChecked"
-          class="cursor-pointer font-semibold text-[14px] hover:bg-slate-50 p-2 rounded-lg transition-colors"
+          (click)="likeUnlike(post._id)"
+          class="cursor-pointer font-semibold text-[14px] hover:bg-slate-50 p-2 rounded-lg text-slate-600 transition-colors"
         >
-          @if (isChecked) {
+          @if ((!isLikeChecked && isLikedBefore) || (isLikeChecked && !isLikedBefore)) {
             <i class="fa-solid fa-heart text-red-600"></i>
           } @else {
-            <i class="fa-regular fa-heart"></i>
+            <i class="fa-regular fa-heart text-slate-600"></i>
           }
           {{ post.likesCount }}
         </button>
         <button
-          #Commentelements
+          #commentElement
           class="cursor-pointer text-slate-600 font-semibold text-[14px] hover:bg-slate-50 p-2 rounded-lg transition-colors"
         >
           <i class="fa-regular fa-comment fa-flip-horizontal"></i>
@@ -130,17 +147,26 @@
           {{ post.sharesCount }}
         </button>
       </div>
-      <div>
+      <!-- <div>
         <button
+          (click)="displayLinkList()"
           class="cursor-pointer items-center mt-1.5 text-slate-600 font-semibold text-[14px] hover:bg-slate-50 p-2 rounded-lg transition-colors"
         >
-          <i class="fa-regular fa-bookmark"></i>
+          <i class="fa-solid fa-users"></i>
+          
         </button>
-      </div>
+      </div> -->
     </div>
+
+    <!------  LinkList  ------->
+
+    @if (isclicked) {
+      <app-likes (eventEmmitter)="closeLinkList()" [postId]="post._id"></app-likes>
+    }
+
     <hr class="border-t border-slate-200 mt-1 mb-4" />
     <!------  commentsList  ------->
-    @defer (on interaction) {
+    @defer (on interaction(commentElement)) {
       <app-comments-list [updatedList]="commentList" [postId]="post._id"></app-comments-list>
     } @placeholder {
       <button class="cursor-pointer">
@@ -170,8 +196,8 @@
     <form #form (submit)="sendComment($event, form, post._id)">
       <div class="flex gap-2 mt-4">
         <img
-          src="https://i.pravatar.cc/150?img=11"
-          alt="Ahmed Menisy"
+          [src]="userDetails.photo"
+          [alt]="userDetails.name"
           class="w-8 h-8 rounded-full object-cover"
         />
 
@@ -218,7 +244,7 @@
             </div>
           </div>
           <button
-            class="flex self-center cursor-pointer bg-brand-light w-9 h-9 p-2 pt-3 rounded-full"
+            class="flex self-center cursor-pointer bg-blue-500 hover:bg-blue-800 w-9 h-9 p-2 pt-3 rounded-full"
             type="submit"
           >
             <i class="self-center fa-regular fa-paper-plane text-white text-[15px]"></i>
