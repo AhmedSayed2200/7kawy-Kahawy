@@ -15,7 +15,7 @@
           <textarea
             [(ngModel)]="postText"
             [formControl]="commentContent"
-            class="w-full h-10 bg-transparent rounded-full cursor-pointer focus:cursor-text text-[14px] resize-none outline-none scrollbar-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            class="w-full h-10 bg-transparent rounded-full dark:text-body cursor-pointer focus:cursor-text text-[14px] resize-none outline-none scrollbar-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             placeholder="Comment as ..."
           ></textarea>
           <div class="flex absolute top-1/2 right-[2%] -translate-y-1/2">
@@ -25,7 +25,7 @@
             <div class="relative">
               <button
                 (click)="showEmojiPicker = !showEmojiPicker"
-                class="me-2 cursor-pointer"
+                class="me-2 cursor-pointer dark:text-body dark:hover:text-white"
                 type="button"
               >
                 <i class="fa-regular text-[18px] fa-face-smile"></i>
@@ -41,7 +41,7 @@
                 </div>
               }
             </div>
-            <label [for]="comment._id" class="cursor-pointer"
+            <label [for]="comment._id" class="cursor-pointer dark:text-body dark:hover:text-white"
               ><i class="fa-regular fa-image text-[18px]"></i
             ></label>
             <input [id]="comment._id" (change)="imgComment($event)" type="file" class="hidden" />

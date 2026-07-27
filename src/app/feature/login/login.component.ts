@@ -19,12 +19,22 @@ export class LoginComponent {
   msgError:string=""
   loading:boolean = false;
   registerSubscribe:Subscription=new Subscription();
-
+  activeThemeMode=localStorage.getItem("theme");
+  ImgUrlHakawy:string="";
+  ImgUrlSahla:string="";
   loginForm: FormGroup =new FormGroup({
     login: new FormControl("",[Validators.required,Validators.minLength(3)]),
     password:new FormControl("",[Validators.required , Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/)]),
   })
 
+  ngOnInit(): void {
+
+    this.setImgsByTheme()
+  }
+  setImgsByTheme(){
+   this.ImgUrlHakawy= localStorage.getItem("theme")==='dark'?"/images/7akawyBlack.png":"/images/7kawywhite.png";
+   this.ImgUrlSahla= localStorage.getItem("theme")==='dark'?"/images/HelloDark.png":"/images/lastman2.png";
+  }
 
   submitDate(){
     if(this.loginForm.valid){

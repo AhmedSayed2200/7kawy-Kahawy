@@ -45,4 +45,13 @@ export class PostsService {
   getAllBookMaks(): Observable<any>{
     return this.httpClient.get(environment.baseUrl+"/users/bookmarks",this.headers)
   }
+  getSinglePost(postId:string): Observable<any>{
+    return this.httpClient.get(environment.baseUrl+`/posts/${postId}`,this.headers)
+  }
+  sharePost(postId:string,body:object): Observable<any>{
+    return this.httpClient.post(environment.baseUrl+`/posts/${postId}/share`,body,this.headers)
+  }
+  getAllFollowingPost(): Observable<any>{
+    return this.httpClient.get(environment.baseUrl+`/posts/feed?only=following&limit=10`,this.headers)
+  }
 }

@@ -16,18 +16,20 @@
   aria-label="Sidebar"
   tabindex="-1"
 >
-  <div class="bg-white relative h-full p-4 md:p-0">
+  <div class="bg-white dark:bg-neutral-primary-soft dark:bg-darkBg relative h-full p-4 md:p-0">
     <div class="flex justify-between items-center mb-3 relative rounded-[10px] p-2">
       <div class="ps-2">
-        <h2 class="text-xl font-bold text-gray-900 pt-2 tracking-tight">Global Newsroom</h2>
+        <h2 class="text-xl font-bold text-gray-900 dark:text-body pt-2 tracking-tight">
+          Global Newsroom
+        </h2>
         <p class="text-sm text-gray-500 mt-1">
           Live & Exclusive: Today's breaking stories as they unfold
         </p>
       </div>
-      <div class="flex gap-2 absolute bottom-0 right-[5px]">
+      <div class="flex gap-2 absolute bottom-[-10px] right-[5px]">
         <button
           (click)="scrollSlider(-320)"
-          class="p-1.5 rounded-full border border-gray-200 bg-white hover:bg-gray-50 active:scale-95 transition-all text-gray-600 shadow-xs cursor-pointer z-10"
+          class="p-1.5 rounded-full border border-gray-200 dark:text-body dark:bg-neutral-secondary-medium bg-white hover:bg-gray-50 active:scale-95 transition-all text-gray-600 shadow-xs cursor-pointer z-10"
         >
           <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path
@@ -40,7 +42,7 @@
         </button>
         <button
           (click)="scrollSlider(320)"
-          class="p-1.5 rounded-full border border-gray-200 bg-white hover:bg-gray-50 active:scale-95 transition-all text-gray-600 shadow-xs cursor-pointer z-10"
+          class="p-1.5 rounded-full border border-gray-200 dark:text-body dark:bg-neutral-secondary-medium bg-white hover:bg-gray-50 active:scale-95 transition-all text-gray-600 shadow-xs cursor-pointer z-10"
         >
           <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path
@@ -58,7 +60,7 @@
       <div class="flex -space-x-44">
         @for (article of articles; track article.id) {
           <article
-            class="relative shrink-0 w-80 bg-white rounded-2xl border border-gray-100 shadow-lg overflow-hidden transition-all duration-300 ease-out cursor-pointer flex flex-col hover:-translate-y-6 hover:scale-105 hover:z-30 hover:mx-16 hover:border-blue-200 hover:shadow-2xl"
+            class="relative shrink-0 w-80 bg-white dark:bg-neutral-primary-soft dark:text-body rounded-2xl border border-gray-100 shadow-lg overflow-hidden transition-all duration-300 ease-out cursor-pointer flex flex-col hover:-translate-y-6 hover:scale-105 hover:z-30 hover:mx-16 hover:border-blue-200 hover:shadow-2xl"
           >
             <div class="relative aspect-video w-full overflow-hidden bg-gray-50">
               @if (article.image) {
@@ -93,7 +95,9 @@
                 <time class="text-[10px] text-gray-400 mb-1 block">
                   {{ article.publishedAt | date: 'mediumDate' }}
                 </time>
-                <h3 class="text-sm font-bold text-gray-900 line-clamp-2 mb-2 leading-snug">
+                <h3
+                  class="text-sm font-bold text-gray-900 line-clamp-2 dark:text-body mb-2 leading-snug"
+                >
                   {{ article.title }}
                 </h3>
                 <p class="text-xs text-gray-500 line-clamp-3 leading-relaxed">

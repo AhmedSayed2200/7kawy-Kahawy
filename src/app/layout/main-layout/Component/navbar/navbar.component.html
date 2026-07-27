@@ -1,35 +1,166 @@
-<nav class="bg-neutral-primary sticky w-full z-50 top-0 border-b border-default">
+<nav class="bg-neutral-primary dark:bg-darkBg sticky w-full z-[45] top-0 border-b border-default">
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
     <a
       routerLink="/time-line"
       class="flex items-center space-x-3 rtl:space-x-reverse cursor-pointer"
     >
-      <img src="/images/last.png" class="h-12" alt="hkawy and Kahawy Logo" />
+      <img src="/images/last.png" class="h-10 sm:h-12" alt="hkawy and Kahawy Logo" />
 
       <!-- <span class="font-bold text-md">
             <span><span class="text-mainColor">7</span>kawy</span> و
             <span class="ps-7 block"><span class="text-mainColor">K</span>ahawy</span>
           </span> -->
     </a>
-    <div class="flex items-center lg:order-2 space-x-3 lg:space-x-0 rtl:space-x-reverse">
-      <span class="mx-2 self-center cursor-pointer"><i class="fa-regular fa-bell"></i></span>
-      <span class="mx-2 self-center cursor-pointer"><i class="fa-regular fa-moon"></i></span>
+    <div
+      class="flex items-center self-center lg:order-2 space-x-0.5 lg:space-x-0 rtl:space-x-reverse"
+    >
+      <!----------------Notifications List --------------->
+      <div class="mx-1 sm:mx-2 self-center">
+        <button
+          id="dropdownNotificationButton"
+          data-dropdown-toggle="dropdownNOtification"
+          class="relative cursor-pointer flex items-center justify-between w-full py-2 px-3 rounded font-medium text-heading md:w-auto hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0"
+        >
+          <i class="fa-regular fa-bell dark:text-body dark:hover:text-white"></i>
+          @if (unReadNotificationsCount) {
+            <span
+              class="absolute -top-2 -right-3 w-5 h-5 bg-red-600 text-white text-[10px] rounded-full flex items-center justify-center font-bold"
+            >
+              {{ unReadNotificationsCount }}
+            </span>
+          }
+        </button>
+        <!-- Dropdown menu -->
+        <div
+          id="dropdownNOtification"
+          class="z-10 hidden bg-neutral-primary-medium border border-default-medium dark:text-white rounded-base shadow-lg w-full sm:w-2/3 lg:w-1/2 xl:w-1/3 p-5"
+        >
+          <div class="flex justify-between">
+            <span class="text-2xl me-5">Notifications</span>
+            <button
+              (click)="markAllAsRead()"
+              class="text-[13px] self-center cursor-pointer bg-blue-300 hover:bg-blue-400 py-2 px-3 rounded-full"
+            >
+              <i class="fa-solid fa-check"></i> mark all as read
+            </button>
+          </div>
+          <div class="mt-2">
+            <button
+              (click)="displayedList = notificationList; activeTab = 'all'"
+              [class]="activeTab == 'all' ? 'bg-blue-300' : ''"
+              class="border hover:bg-blue-300 px-3 rounded-[10px] cursor-pointer me-2"
+            >
+              All
+            </button>
+            <button
+              (click)="displayedList = unReadNotificationList; activeTab = 'unread'"
+              [class]="activeTab == 'unread' ? 'bg-blue-300' : ''"
+              class="border hover:bg-blue-300 px-3 rounded-[10px] cursor-pointer me-2"
+            >
+              un read
+            </button>
+          </div>
+          <ul
+            class="p-2 text-sm text-black font-medium h-[50vh] overflow-auto"
+            aria-labelledby="dropdowNotificationButton"
+          >
+            @for (notification of displayedList; track notification._id) {
+              <li
+                [class]="
+                  !notification.isRead
+                    ? 'bg-blue-200 hover:bg-blue-300 dark:text-black'
+                    : 'hover:bg-gray-300 dark:text-gray-300 dark:hover:text-black'
+                "
+                class="border border-gray-400 transition-all duration-400 rounded-[10px] cursor-pointer my-3 flex justify-between p-3"
+              >
+                <div class="flex gap-2">
+                  <img
+                    class="w-[40px] h-[40px] object-cover rounded-full"
+                    [src]="notification.actor.photo"
+                    [alt]="notification.actor.name"
+                  />
+                  <div>
+                    <h3>{{ notification.actor.name }}</h3>
+                    <div>
+                      @switch (notification.type) {
+                        @case ('comment_post') {
+                          <i class="fa-regular fa-comment me-1"></i>
+                          comment on your post
+                        }
+                        @case ('share_post') {
+                          <i class="fa-solid fa-retweet me-1"></i>
+                          shared your post
+                        }
+                        @case ('like_post') {
+                          <i class="fa-solid fa-heart me-1"></i>
+                          liked your comment
+                        }
+                        @case ('follow_user') {
+                          <i class="fa-solid fa-user-plus me-1"></i>
+                          followed you
+                        }
+                      }
+                    </div>
+                  </div>
+                </div>
+                @if (!notification.isRead) {
+                  <button
+                    (click)="markAsRead(notification._id); notification.isRead = true"
+                    class="inline-flex text-[10px] hover:bg-blue-400 transition-all duration-400 items-center p-2 cursor-pointer rounded"
+                  >
+                    <i class="fa-solid fa-check me-2"></i>
+                    mark as read
+                  </button>
+                } @else {
+                  <span class="text-[10px]">
+                    <i class="fa-solid fa-check me-2"></i>
+                    readed
+                  </span>
+                }
+              </li>
+            }
+            @if (!isLastPage && activeTab == 'all') {
+              <button
+                (click)="getAllNotification()"
+                class="text-center bg-gray-300 hover:bg-gray-400 transition-all duration-500 w-full rounded-[10px] p-3 cursor-pointer"
+              >
+                load more
+              </button>
+            }
+          </ul>
+        </div>
+      </div>
+      <!----------------dark mode --------------->
+      <span
+        (click)="changeMode()"
+        class="mx-1 sm:mx-2 self-center cursor-pointer dark:text-body dark:hover:text-white"
+      >
+        @if (activeMode === 'dark') {
+          <i class="fa-solid fa-sun"></i>
+        } @else {
+          <i class="fa-regular fa-moon"></i>
+        }
+      </span>
+      <!----------------user info --------------->
       <button
         type="button"
-        class="flex text-sm bg-gray-100 focus:ring-4 focus:ring-gray-300 rounded-full py-1 px-2.5 lg:me-0 cursor-pointer"
+        class="flex text-sm bg-gray-100 focus:ring-4 dark:text-body dark:hover:text-white dark:bg-neutral-secondary-medium focus:ring-gray-300 dark:focus:ring-black rounded-full py-1 px-2.5 lg:me-0 cursor-pointer"
         id="user-menu-button"
         aria-expanded="false"
         data-dropdown-toggle="user-dropdown"
         data-dropdown-placement="bottom"
       >
         <img class="w-8 h-8 rounded-full" [src]="userDetails.photo" alt="user photo" />
-        <span class="m-2 me-0"
+        <span class="m-2 me-0 md:hidden"
+          >{{ userDetails.name.split(' ')[0] }} <i class="fa-solid fa-chevron-down ms-1"></i
+        ></span>
+        <span class="m-2 me-0 hidden md:inline"
           >{{ userDetails.name }} <i class="fa-solid fa-chevron-down ms-1"></i
         ></span>
       </button>
       <!-- Dropdown menu -->
       <div
-        class="z-50 hidden bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44"
+        class="z-[45] hidden bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44"
         id="user-dropdown"
       >
         <div class="px-4 py-3 text-sm border-b border-default">
@@ -40,7 +171,7 @@
           class="p-2 text-sm text-body font-medium cursor-pointer"
           aria-labelledby="user-menu-button"
         >
-          <li>
+          <!-- <li>
             <button
               id="doubleDropdownButton"
               data-dropdown-toggle="doubleDropdown"
@@ -48,7 +179,7 @@
               type="button"
               class="inline-flex items-center cursor-pointer w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
             >
-              <i class="fa-solid fa-chevron-left text-[9px]"></i>
+              <i class="fa-solid fa-gear me-2"></i>
               Setting
               <svg
                 class="h-4 w-4 ms-auto hidden rtl:rotate-180"
@@ -70,7 +201,7 @@
             </button>
             <div
               id="doubleDropdown"
-              class="z-10 hidden bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44"
+              class="z-[45] hidden bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44"
             >
               <ul
                 class="p-2 text-sm text-body font-medium cursor-pointer"
@@ -92,12 +223,12 @@
                 </li>
               </ul>
             </div>
-          </li>
+          </li> -->
           <li>
             <a
               (click)="logOut()"
-              class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded ms-2"
-              >Sign out</a
+              class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
+              ><i class="fa-solid fa-right-from-bracket me-2"></i> Sign out</a
             >
           </li>
         </ul>
@@ -133,17 +264,17 @@
       id="navbar-user"
     >
       <div
-        class="font-medium flex flex-col p-4 lg:p-0 mt-4 border border-default rounded-base bg-neutral-secondary-soft lg:flex-row lg:space-x-8 rtl:space-x-reverse lg:mt-0 lg:border-0 lg:bg-neutral-primary"
+        class="font-medium flex flex-col p-4 lg:p-0 mt-4 border border-default rounded-base bg-neutral-secondary-soft lg:flex-row lg:space-x-8 rtl:space-x-reverse lg:mt-0 lg:border-0"
       >
-        <div class="relative">
+        <div class="relative bg-transparent">
           <i class="absolute top-1/2 start-5 -translate-1/2 fa-solid fa-magnifying-glass"></i>
           <input
             type="search"
-            class="block w-full lg:w-[500px] ps-10 bg-gray-100 cursor-pointer border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:cursor-text focus:border-brand shadow-xs placeholder:text-gray-500 text-left"
+            class="block w-full lg:w-[500px] ps-10 bg-gray-100 cursor-pointer dark:bg-neutral-secondary-medium dark:text-body border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:cursor-text focus:border-brand shadow-xs placeholder:text-gray-500 text-left"
             placeholder="Search for posts"
           />
         </div>
-        <ul class="lg:hidden mt-2">
+        <!-- <ul class="lg:hidden mt-2">
           <li>
             <a
               href="#"
@@ -180,7 +311,7 @@
               >Contact</a
             >
           </li>
-        </ul>
+        </ul> -->
       </div>
     </div>
   </div>

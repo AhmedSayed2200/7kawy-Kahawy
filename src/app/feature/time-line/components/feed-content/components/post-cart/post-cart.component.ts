@@ -10,10 +10,11 @@ import { Icomments } from './components/card-coments/modules/icomments.interface
 import { Iposts } from '../../../../../../core/modules/iposts.interface';
 import { LikesComponent } from './components/likes/likes.component';
 import { IuserDetails } from '../../../../../../core/modules/iuser-details.interface';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-post-cart',
-  imports: [PickerComponent,LikesComponent, CardComentsComponent, NgClass, FormsModule, ReactiveFormsModule, CommentsListComponent,DatePipe],
+  imports: [PickerComponent, LikesComponent, CardComentsComponent, NgClass, FormsModule, ReactiveFormsModule, CommentsListComponent, DatePipe, RouterLink],
   templateUrl: './post-cart.component.html',
   styleUrl: './post-cart.component.css',
 })
@@ -29,9 +30,12 @@ export class PostCartComponent {
    isLikedBefore:boolean = false;
    first:boolean=true;
    isBookMarkChecked:boolean = false; 
+   isZoomed:boolean = false;
+   isSharedNow:boolean = false;
    commentList:Icomments[]=[]
  @Input({required:true}) post!:Iposts;
  @Input() isFromBookmarks:boolean=false;
+ @Input() isSharedPost:boolean=false;
   @Output() eventEmitter: EventEmitter<string> = new EventEmitter();
   @Output() EventEmitterBookmarks: EventEmitter<string> = new EventEmitter();
    private readonly postsService=inject(PostsService);
@@ -165,6 +169,24 @@ addEmojii(event: any) {
       }
     })
   }
+
+  sharePost(postId:string,shareInputNow:HTMLInputElement){
+    const body={
+      "body":shareInputNow.value
+    }
+    this.postsService.sharePost(postId,body).subscribe({
+      next: (res)=>{
+        console.log(res);
+      this.onFireEvent();
+      this.isSharedNow=false;
+      },
+      error: (err)=>{
+        console.log(err);
+       
+      }
+    })
+  }
+
 }
 
 

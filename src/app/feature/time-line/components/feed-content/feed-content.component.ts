@@ -46,7 +46,7 @@ export class FeedContentComponent {
     this.isLoading = true;
     if(!isFromCreatePost){
       this.currentPage++;
-pageNumber=this.currentPage;
+     pageNumber=this.currentPage;
     }
     this.postsService.getallposts(pageNumber).subscribe({
       next:(res) => {

@@ -13,7 +13,7 @@ describe('NotificationComponent', () => {
 
     fixture = TestBed.createComponent(NotificationComponent);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+    fixture.detectChanges();
   });
 
   it('should create', () => {

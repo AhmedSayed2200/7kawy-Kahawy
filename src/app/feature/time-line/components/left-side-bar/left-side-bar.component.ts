@@ -10,8 +10,11 @@ import { RouterLink, RouterLinkActive } from "@angular/router";
 })
 export class LeftSideBarComponent  
  {
-  //       ngOnInit(): void {
-  //   initFlowbite();
-  // }
+  myId:string="";
+        ngOnInit(): void {
+      this.myId=JSON.parse(localStorage.getItem("user data")!)._id;
+  }
+
+
 
 }

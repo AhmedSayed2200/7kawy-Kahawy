@@ -1,0 +1,16 @@
+<section>
+  @if (myId == userId) {
+    <app-creat-post (eventEmitter)="geProfilePosts()"></app-creat-post>
+  }
+  @for (post of profilePostList; track post._id) {
+    <app-post-cart (eventEmitter)="geProfilePosts()" [post]="post"></app-post-cart>
+  } @empty {
+    <div class="w-1/2 mx-auto my-10">
+      <img
+        class="w-full aspect-square rounded-[20px] object-cover"
+        src="/images/noPosts.png"
+        alt=""
+      />
+    </div>
+  }
+</section>

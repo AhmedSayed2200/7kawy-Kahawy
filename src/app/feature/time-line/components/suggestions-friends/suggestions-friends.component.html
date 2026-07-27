@@ -1,1 +1,95 @@
-<p>suggestions-friends works!</p>
+<div class="flex flex-wrap grid md:grid-cols-2 xl:grid-cols-3 gap-3">
+  @for (friend of suggestedFriends; track friend._id) {
+    <div class="p-5 mt-2 bg-neutral-primary-soft border border-default rounded-[10px]">
+      <div class="overflow-hidden">
+        <img
+          class="w-full h-[200px] cursor-pointer mb-3 rounded-[10px] object-cover shadow-lg hover:scale-150 transition-all duration-500"
+          [src]="friend.photo"
+          [alt]="friend.name"
+        />
+      </div>
+
+      <div class="ms-3 mb-5">
+        <h2 class="text-base font-bold tracking-tight text-heading leading-tight mb-0.5">
+          {{ friend.name }}
+        </h2>
+        <span class="text-xs text-body my-2 block">@{{ friend.username }}</span>
+
+        <div class="flex items-center gap-2 border-t border-gray-200/60 pt-1.5 text-xs text-body">
+          <span class="font-semibold">{{ friend.mutualFollowersCount }} mutual</span>
+          <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
+          <span class="font-semibold">{{ friend.followersCount }} total</span>
+        </div>
+      </div>
+
+      <div class="flex justify-between gap-3">
+        <button
+          (click)="followUnFollow(friend._id); friend.isFollowed = !friend.isFollowed"
+          type="button"
+          [class]="
+            friend.isFollowed ? 'bg-gray-600 hover:bg-gray-800' : 'bg-blue-600 hover:bg-blue-800'
+          "
+          class="inline-flex items-center justify-center gap-1.5 text-white px-5 py-2 focus:ring-4 focus:ring-brand-medium shadow-xs font-semibold rounded-full text-xs focus:outline-none transition-transform active:scale-95 flex-1"
+        >
+          <svg
+            class="w-4 h-4 me-1"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2.5"
+              d="M16 12h4m-2 2v-4M4 18v-1a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1Zm8-10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+            />
+          </svg>
+
+          {{ friend.isFollowed ? 'unFollow' : 'Follow' }}
+        </button>
+
+        <button
+          (click)="deleteSuggetFriend(friend._id)"
+          type="button"
+          class="inline-flex items-center justify-center gap-1.5 text-white px-5 py-2 bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-brand-medium shadow-xs font-semibold rounded-full text-xs focus:outline-none transition-transform active:scale-95 flex-1"
+        >
+          <svg
+            class="w-4 h-4 me-1"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2.5"
+              d="M6 18 18 6M6 6l12 12"
+            />
+          </svg>
+          Delete
+        </button>
+      </div>
+    </div>
+  }
+</div>
+@if (hasMore) {
+  <div>
+    <p
+      class="text-heading bg-blue-600 hover:bg-blue-800 px-5 py-2 text-center"
+      ;
+      (click)="getSuggestedFriends(true)"
+    >
+      see more....
+    </p>
+  </div>
+} @else {
+  <div>
+    <p class="text-heading bg-gray-600 hover:bg-gray-800 px-5 py-2 text-center">
+      no have suggested friends more...
+    </p>
+  </div>
+}

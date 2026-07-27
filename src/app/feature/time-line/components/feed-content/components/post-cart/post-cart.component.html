@@ -1,5 +1,7 @@
 <section>
-  <div class="bg-white rounded-[16px] my-3 shadow-sm border border-slate-200 p-4 font-sans">
+  <div
+    class="bg-white dark:bg-darkBg rounded-[16px] my-3 shadow-sm border border-slate-200 p-4 font-sans"
+  >
     <!-- user details  -->
     <div class="flex items-start justify-between mb-3">
       <div class="flex items-center gap-3">
@@ -11,25 +13,26 @@
 
         <div>
           <span
-            class="text-[15px] font-bold text-slate-900 leading-tight hover:underline cursor-pointer"
+            [routerLink]="['/profile', post.user._id]"
+            class="text-[15px] font-bold dark:text-body text-slate-900 leading-tight hover:underline cursor-pointer"
             >{{ post.user.name }}
           </span>
-          <div class="flex items-center text-[13px] text-gray-700 mt-0.5 gap-1">
+          <div class="flex items-center text-[13px] dark:text-body mt-0.5 gap-1">
             <span class="hover:underline me-1 cursor-pointer"
               >{{ post.createdAt | date: 'shortTime' }}
             </span>
             @switch (post.privacy) {
               @case ('public') {
-                <i class="fa-solid text-gray-700 fa-earth-americas text-[13px]"></i>
-                <span class="text-gray-700 text-[13.5px]">Public</span>
+                <i class="fa-solid dark:text-body fa-earth-americas text-[13px]"></i>
+                <span class="dark:text-body text-[13.5px]">Public</span>
               }
               @case ('followers') {
-                <i class="fa-solid text-gray-700 fa-users text-[13px]"></i>
-                <span class="text-gray-700 text-[13.5px]">Followers</span>
+                <i class="fa-solid dark:text-body fa-users text-[13px]"></i>
+                <span class="dark:text-body text-[13.5px]">Followers</span>
               }
               @case ('only_me') {
-                <i class="fa-solid text-gray-700 fa-lock text-[11.5px]"></i>
-                <span class="text-gray-700 text-[13.5px]">Only me</span>
+                <i class="fa-solid dark:text-body fa-lock text-[11.5px]"></i>
+                <span class="dark:text-body text-[13.5px]">Only me</span>
               }
             }
           </div>
@@ -40,10 +43,10 @@
       <div class="relative">
         <button
           id="dropdownMenuIconButton"
-          class="text-heading peer bg-neutral-primary box-border border border-transparent hover:bg-neutral-secondary-medium focus:ring-4 focus:ring-neutral-tertiary font-medium leading-5 rounded-base text-sm p-2 focus:outline-none"
+          class="text-heading peer bg-neutral-primary dark:bg-neutral-secondary-medium box-border border border-transparent hover:bg-neutral-secondary-medium dark:bg- focus:ring-4 focus:ring-neutral-tertiary font-medium leading-5 rounded-base text-sm p-2 focus:outline-none"
           type="button"
         >
-          <i class="fa-solid fa-gear cursor-pointer text-[#45556C]"></i>
+          <i class="fa-solid fa-gear cursor-pointer text-[#45556C] dark:text-body"></i>
         </button>
 
         <!-- Dropdown menu -->
@@ -97,11 +100,35 @@
     <div class="text-[15px] text-slate-900 mb-4">
       <p>{{ post.body }}</p>
       @if (post.image) {
-        <img [src]="post.image" class="w-full max-h-90 object-cover rounded shadow mt-2" alt="" />
+        <img
+          (click)="isZoomed = true"
+          [src]="post.image"
+          class="w-full cursor-pointer max-h-90 object-cover rounded shadow mt-2"
+          alt=""
+        />
       }
       <!-- <img [src]="post.image" class="w-full max-h-90 object-cover rounded shadow mt-2" alt="" /> -->
     </div>
+    <!----- img zoom ----->
+    @if (isZoomed) {
+      <div class="fixed inset-0 bg-black/80 z-50">
+        <img
+          class="w-[80%] lg:h-[90%] object-cover absolute top-1/2 left-1/2 -translate-1/2"
+          [src]="post.image"
+          alt=""
+        />
+        <div
+          (click)="isZoomed = false"
+          class="absolute right-[30px] top-[20px] bg-gray-800 hover:bg-gray-500 p-2 rounded-full cursor-pointer text-xl text-white"
+        >
+          <i class="fa-solid fa-x"></i>
+        </div>
+      </div>
+    }
 
+    @if (post.sharedPost) {
+      <app-post-cart [isSharedPost]="true" [post]="post.sharedPost"></app-post-cart>
+    }
     <!-- like share comments  counts & view details -->
     <div class="flex items-center justify-between text-[13px] text-slate-500 mb-3 px-1">
       <div class="flex items-center gap-3">
@@ -110,44 +137,46 @@
         >
         <span class="cursor-pointer hover:underline">{{ post.commentsCount }} comments</span>
         <button
+          [routerLink]="['/details', post._id]"
           class="font-semibold cursor-pointer text-blue-600 hover:text-blue-800 hover:underline"
         >
           View details
         </button>
       </div>
     </div>
+    @if (!isSharedPost) {
+      <hr class="border-t border-slate-200 mb-1" />
 
-    <hr class="border-t border-slate-200 mb-1" />
-
-    <!-- buttons like - comment - share -->
-    <div class="flex justify-between">
-      <div class="flex items-center gap-2 px-1 py-1">
-        <button
-          (click)="likeUnlike(post._id)"
-          class="cursor-pointer font-semibold text-[14px] hover:bg-slate-50 p-2 rounded-lg text-slate-600 transition-colors"
-        >
-          @if ((!isLikeChecked && isLikedBefore) || (isLikeChecked && !isLikedBefore)) {
-            <i class="fa-solid fa-heart text-red-600"></i>
-          } @else {
-            <i class="fa-regular fa-heart text-slate-600"></i>
-          }
-          {{ post.likesCount }}
-        </button>
-        <button
-          #commentElement
-          class="cursor-pointer text-slate-600 font-semibold text-[14px] hover:bg-slate-50 p-2 rounded-lg transition-colors"
-        >
-          <i class="fa-regular fa-comment fa-flip-horizontal"></i>
-          {{ post.commentsCount }}
-        </button>
-        <button
-          class="cursor-pointer text-slate-600 font-semibold text-[14px] hover:bg-slate-50 p-2 rounded-lg transition-colors"
-        >
-          <i class="fa-regular fa-paper-plane"></i>
-          {{ post.sharesCount }}
-        </button>
-      </div>
-      <!-- <div>
+      <!-- buttons like - comment - share -->
+      <div class="flex justify-between">
+        <div class="flex items-center gap-2 px-1 py-1">
+          <button
+            (click)="likeUnlike(post._id)"
+            class="cursor-pointer font-semibold text-[14px] hover:bg-slate-50 dark:hover:bg-neutral-secondary-medium p-2 rounded-lg text-slate-600 transition-colors"
+          >
+            @if ((!isLikeChecked && isLikedBefore) || (isLikeChecked && !isLikedBefore)) {
+              <i class="fa-solid fa-heart text-red-600"></i>
+            } @else {
+              <i class="fa-regular fa-heart text-slate-600"></i>
+            }
+            {{ post.likesCount }}
+          </button>
+          <button
+            #commentElement
+            class="cursor-pointer text-slate-600 font-semibold text-[14px] dark:hover:bg-neutral-secondary-medium hover:bg-slate-50 p-2 rounded-lg transition-colors"
+          >
+            <i class="fa-regular fa-comment fa-flip-horizontal"></i>
+            {{ post.commentsCount }}
+          </button>
+          <button
+            (click)="isSharedNow = true"
+            class="cursor-pointer text-slate-600 font-semibold text-[14px] dark:hover:bg-neutral-secondary-medium hover:bg-slate-50 p-2 rounded-lg transition-colors"
+          >
+            <i class="fa-regular fa-paper-plane"></i>
+            {{ post.sharesCount }}
+          </button>
+        </div>
+        <!-- <div>
         <button
           (click)="displayLinkList()"
           class="cursor-pointer items-center mt-1.5 text-slate-600 font-semibold text-[14px] hover:bg-slate-50 p-2 rounded-lg transition-colors"
@@ -156,101 +185,159 @@
           
         </button>
       </div> -->
-    </div>
+      </div>
+      @if (isSharedNow) {
+        <div
+          class="fixed top-1/2 left-1/2 -translate-1/2 z-50 w-[500px] h-[200px] rounded-[10px] shadow-2xl bg-white"
+        >
+          <div class="flex justify-between p-4 text-black text-2xl">
+            <span class="h2">Share post</span>
+            <div
+              class="cursor-pointer px-2 py-1 transition-all duration-500 hover:bg-gray-300 text-sm rounded-full"
+            >
+              <i (click)="isSharedNow = false" class="fa-solid fa-x"></i>
+            </div>
+          </div>
+          <div class="w-[400px] mt-3 absolute top-1/2 left-1/2 -translate-1/2">
+            <input
+              #shareInputNow
+              id="message"
+              class="bg-neutral-secondary-medium border cursor-pointer focus:cursor-text border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full p-3.5 shadow-xs placeholder:text-body"
+              placeholder="Say something ...."
+            />
+            <div class="flex justify-end mt-3">
+              <button
+                (click)="sharePost(post._id, shareInputNow)"
+                type="button"
+                class="inline-flex cursor-pointer items-center justify-center gap-1.5 bg-blue-500 hover:bg-blue-800 transition-all duration-500 text-white px-5 py-2 focus:ring-4 focus:ring-brand-medium shadow-xs font-semibold rounded-full text-xs focus:outline-none active:scale-95 flex-1"
+              >
+                <i class="fa-solid fa-paper-plane"></i>
+                Share now
+              </button>
 
-    <!------  LinkList  ------->
-
-    @if (isclicked) {
-      <app-likes (eventEmmitter)="closeLinkList()" [postId]="post._id"></app-likes>
-    }
-
-    <hr class="border-t border-slate-200 mt-1 mb-4" />
-    <!------  commentsList  ------->
-    @defer (on interaction(commentElement)) {
-      <app-comments-list [updatedList]="commentList" [postId]="post._id"></app-comments-list>
-    } @placeholder {
-      <button class="cursor-pointer">
-        <div class="flex items-center -space-x-3.5 isolate">
-          <img
-            class="w-7 h-7 rounded-full border-1 border-white object-cover ring-1 ring-black/5"
-            src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80"
-            alt="User 1"
-          />
-          <img
-            class="w-7 h-7 rounded-full border-1 border-white object-cover ring-1 ring-black/5"
-            src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&auto=format&fit=crop&q=80"
-            alt="User 2"
-          />
-          <img
-            class="w-7 h-7 rounded-full border-1 border-white object-cover ring-1 ring-black/5"
-            src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&auto=format&fit=crop&q=80"
-            alt="User 3"
-          />
-          <div>
-            <span class="ms-5 text-gray-500">View comments . . . .</span>
+              <button
+                (click)="isSharedNow = false"
+                type="button"
+                class="inline-flex cursor-pointer items-center justify-center gap-1.5 text-white transition-all duration-500 px-5 py-2 bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-brand-medium shadow-xs font-semibold rounded-full text-xs focus:outline-none active:scale-95 flex-1"
+              >
+                <svg
+                  class="w-4 h-4 me-1"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2.5"
+                    d="M6 18 18 6M6 6l12 12"
+                  />
+                </svg>
+                cancel
+              </button>
+            </div>
           </div>
         </div>
-      </button>
-    }
-    <!-- Create Comments  -->
-    <form #form (submit)="sendComment($event, form, post._id)">
-      <div class="flex gap-2 mt-4">
-        <img
-          [src]="userDetails.photo"
-          [alt]="userDetails.name"
-          class="w-8 h-8 rounded-full object-cover"
-        />
+      }
+      <!------  LinkList  ------->
 
-        <!-- <div
+      @if (isclicked) {
+        <app-likes (eventEmmitter)="closeLinkList()" [postId]="post._id"></app-likes>
+      }
+
+      <hr class="border-t border-slate-200 mt-1 mb-4" />
+      <!------  commentsList  ------->
+      @defer (on interaction(commentElement)) {
+        <app-comments-list [updatedList]="commentList" [postId]="post._id"></app-comments-list>
+      } @placeholder {
+        <button class="cursor-pointer">
+          <div class="flex items-center -space-x-3.5 isolate">
+            <img
+              class="w-7 h-7 rounded-full border-1 border-white object-cover ring-1 ring-black/5"
+              src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80"
+              alt="User 1"
+            />
+            <img
+              class="w-7 h-7 rounded-full border-1 border-white object-cover ring-1 ring-black/5"
+              src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&auto=format&fit=crop&q=80"
+              alt="User 2"
+            />
+            <img
+              class="w-7 h-7 rounded-full border-1 border-white object-cover ring-1 ring-black/5"
+              src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&auto=format&fit=crop&q=80"
+              alt="User 3"
+            />
+            <div>
+              <span class="ms-5 text-gray-500">View comments . . . .</span>
+            </div>
+          </div>
+        </button>
+      }
+      <!-- Create Comments  -->
+      <form #form (submit)="sendComment($event, form, post._id)">
+        <div class="flex gap-2 mt-4">
+          <img
+            [src]="userDetails.photo"
+            [alt]="userDetails.name"
+            class="w-8 h-8 rounded-full object-cover"
+          />
+
+          <!-- <div
         class="flex-1 bg-slate-100 border border-red-400 focus-within:border-blue-300 focus-within:ring-4 focus-within:ring-blue-50 focus-within:bg-white transition-all rounded-[20px] p-2 flex flex-col"
       >
       </div> -->
-
-        <div class="flex gap-2 flex-1">
-          <div class="flex-1 relative">
-            <textarea
-              [(ngModel)]="postText"
-              [formControl]="commentContent"
-              class="w-full h-10 bg-transparent rounded-full cursor-pointer focus:cursor-text text-[14px] resize-none outline-none scrollbar-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-              placeholder="Comment as ..."
-            ></textarea>
-            <div class="flex absolute top-1/2 right-[2%] -translate-y-1/2">
-              <!-- <button class="me-2 cursor-pointer">
+          <!-- img imojy inputs -->
+          <div class="flex gap-2 flex-1">
+            <div class="flex-1 relative">
+              <textarea
+                [(ngModel)]="postText"
+                [formControl]="commentContent"
+                class="w-full dark:text-body h-10 bg-transparent rounded-full cursor-pointer focus:cursor-text text-[14px] resize-none outline-none scrollbar-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                placeholder="Comment as ..."
+              ></textarea>
+              <div class="flex absolute top-1/2 right-[2%] -translate-y-1/2">
+                <!-- <button class="me-2 cursor-pointer">
               <i class="fa-regular text-[18px] fa-face-smile"></i>
             </button> -->
-              <div class="relative">
-                <button
-                  (click)="showEmojiPicker = !showEmojiPicker"
-                  class="me-2 cursor-pointer"
-                  type="button"
-                >
-                  <i class="fa-regular text-[18px] fa-face-smile"></i>
-                </button>
-                @if (showEmojiPicker) {
-                  <div class="absolute top-[30px] end-0 z-50 bg-white rounded-lg shadow-lg">
-                    <emoji-mart
-                      (emojiSelect)="addEmojii($event)"
-                      title="Pick your emoji…"
-                      emoji="point_up"
-                    >
-                    </emoji-mart>
-                  </div>
-                }
+                <div class="relative">
+                  <button
+                    (click)="showEmojiPicker = !showEmojiPicker"
+                    class="me-2 cursor-pointer"
+                    type="button"
+                  >
+                    <i
+                      class="fa-regular text-[18px] fa-face-smile dark:text-body dark:hover:text-white"
+                    ></i>
+                  </button>
+                  @if (showEmojiPicker) {
+                    <div class="absolute top-[30px] end-0 z-50 bg-white rounded-lg shadow-lg">
+                      <emoji-mart
+                        (emojiSelect)="addEmojii($event)"
+                        title="Pick your emoji…"
+                        emoji="point_up"
+                      >
+                      </emoji-mart>
+                    </div>
+                  }
+                </div>
+                <label [for]="post._id" class="cursor-pointer"
+                  ><i
+                    class="fa-regular fa-image text-[18px] dark:text-body dark:hover:text-white"
+                  ></i
+                ></label>
+                <input [id]="post._id" #el (change)="imgComment(el)" type="file" class="hidden" />
               </div>
-              <label [for]="post._id" class="cursor-pointer"
-                ><i class="fa-regular fa-image text-[18px]"></i
-              ></label>
-              <input [id]="post._id" #el (change)="imgComment(el)" type="file" class="hidden" />
             </div>
+            <button
+              class="flex self-center cursor-pointer bg-blue-500 hover:bg-blue-800 w-9 h-9 p-2 pt-3 rounded-full"
+              type="submit"
+            >
+              <i class="self-center fa-regular fa-paper-plane text-white text-[15px]"></i>
+            </button>
           </div>
-          <button
-            class="flex self-center cursor-pointer bg-blue-500 hover:bg-blue-800 w-9 h-9 p-2 pt-3 rounded-full"
-            type="submit"
-          >
-            <i class="self-center fa-regular fa-paper-plane text-white text-[15px]"></i>
-          </button>
-        </div>
-        <!-- <div class="flex items-center justify-between px-1">
+          <!-- <div class="flex items-center justify-between px-1">
           <div class="flex items-center gap-1">
             <input type="file" id="file" class="hidden" />
             <label
@@ -270,12 +357,19 @@
             <i class="fa-solid fa-paper-plane text-[13px] ms-1 mt-.5"></i>
           </button>
         </div> -->
-      </div>
-      @if (imgUrlComment) {
-        <div>
-          <img [src]="imgUrlComment" class="w-full object-center" alt="img for comment" />
+
+          <!-------- uploaded img display ---- -->
         </div>
-      }
-    </form>
+        @if (imgUrlComment) {
+          <div>
+            <img
+              [src]="imgUrlComment"
+              class="w-[250px] h-[250px] object-center"
+              alt="img for comment"
+            />
+          </div>
+        }
+      </form>
+    }
   </div>
 </section>

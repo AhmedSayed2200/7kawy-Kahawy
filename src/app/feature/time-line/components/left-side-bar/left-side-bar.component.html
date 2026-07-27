@@ -20,7 +20,7 @@
         <a
           routerLink="/time-line"
           routerLinkActive="text-fg-brand group"
-          class="flex items-center px-2 py-1.5 rounded-base text-body hover:bg-neutral-tertiary"
+          class="flex items-center px-2 py-1.5 rounded-base text-blue-700 hover:bg-neutral-tertiary"
         >
           <i class="fa-regular fa-house"></i>
           <span class="ms-3">Home</span>
@@ -28,11 +28,40 @@
       </li>
       <li>
         <a
-          routerLink="/profile"
+          [routerLink]="['/profile', myId]"
           class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group"
         >
           <i class="fa-regular fa-user"></i>
           <span class="ms-3">Profile</span>
+        </a>
+      </li>
+      <li>
+        <a
+          routerLink="/feed-posts"
+          routerLinkActive="text-fg-brand group"
+          class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-sparkles"
+            aria-hidden="true"
+          >
+            <path
+              d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"
+            ></path>
+            <path d="M20 2v4"></path>
+            <path d="M22 4h-4"></path>
+            <circle cx="4" cy="20" r="2"></circle>
+          </svg>
+          <span class="ms-3">feed posts</span>
         </a>
       </li>
       <li>
@@ -45,6 +74,7 @@
           <span class="ms-3">Saved posts</span>
         </a>
       </li>
+
       <li>
         <a
           routerLink="/suggestions-Friends"
@@ -119,7 +149,7 @@
             class="flex items-center justify-around px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group"
           >
             <i class="fa-solid fa-lock"></i>
-            <a routerLink="/Change Password">Change Password</a>
+            <a routerLink="/Change Password" class="">Change Password</a>
           </li>
         </ul>
       </li>

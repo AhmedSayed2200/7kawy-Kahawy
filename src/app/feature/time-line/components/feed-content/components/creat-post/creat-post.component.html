@@ -2,27 +2,34 @@
   <form
     #form
     (submit)="sendData($event, form)"
-    class="w-full bg-white rounded-[16px] shadow-sm border border-slate-200 p-4 font-sans flex flex-col"
+    class="w-full bg-white dark:bg-darkBg rounded-[16px] shadow-sm border border-slate-200 p-4 font-sans flex flex-col"
   >
     <!------ User Details --------->
     <div class="flex items-center gap-3 mb-3">
-      <img [src]="userDetails.photo" [alt]="userDetails.name" class="w-10 h-10 rounded-full" />
-      <div>
-        <span class="text-[15px] font-bold text-slate-900 leading-tight">{{
-          userDetails.name
-        }}</span>
+      <img
+        [src]="userDetails.photo"
+        [alt]="userDetails.name"
+        class="w-10 h-10 rounded-full bg-slate-100 border border-slate-50"
+      />
+      <div class="flex justify-between w-full">
+        <div class="flex flex-col">
+          <span class="text-[15px] font-bold text-slate-900 dark:text-body leading-tight">{{
+            userDetails.name
+          }}</span>
+          <span class="dark:text-body">@ {{ userDetails.username }}</span>
+        </div>
 
         <div
-          class="flex p-1 w-fit items-center bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+          class="flex p-1 me-3 w-fit items-center bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
         >
-          <i class="fa-solid fa-earth-americas text-[11px] text-slate-600"></i>
+          <i class="fa-solid fa-earth-americas text-[11px] text-slate-600 dark:text-body"></i>
           <select
             [formControl]="privacy"
-            class="border-none bg-transparent cursor-pointer ring-0 py-1 ps-4 text-xs"
+            class="border-none pe-5 bg-transparent dark:text-body cursor-pointer ring-0 text-xs"
           >
-            <option value="public">public</option>
-            <option value="following">followers</option>
-            <option value="only_me">only me</option>
+            <option class="dark:text-black" value="public">public</option>
+            <option class="dark:text-black" value="following">followers</option>
+            <option class="dark:text-black" value="only_me">only me</option>
           </select>
         </div>
       </div>
@@ -32,7 +39,7 @@
       <textarea
         [(ngModel)]="postText"
         [formControl]="bodyContent"
-        class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-[15px] text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-50 focus:border-blue-300 transition-all resize-y min-h-30"
+        class="w-full bg-slate-50 border border-slate-200 dark:bg-darkBg dark:text-body rounded-xl p-3.5 text-[15px] text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-50 focus:border-blue-300 transition-all resize-y min-h-[50px]"
         placeholder="What's on your mind...?"
         aria-label="Create a new post"
       ></textarea>
@@ -48,12 +55,12 @@
           <input #element type="file" id="file" (change)="saveImage(element)" class="hidden" />
           <label
             for="file"
-            class="flex cursor-pointer items-center gap-2 text-slate-600 hover:bg-slate-50 px-2 py-1.5 rounded-lg transition-colors group"
+            class="flex cursor-pointer items-center gap-2 text-slate-600 dark:hover:bg-dark/50 hover:bg-slate-50 px-2 py-1.5 rounded-lg transition-colors group"
           >
             <i
               class="fa-regular fa-image text-[#22c55e] text-[1.1rem] group-hover:scale-110 transition-transform"
             ></i>
-            <span class="text-[14px] font-semibold text-slate-600">Photo/video</span>
+            <span class="text-[14px] font-semibold text-slate-600 dark:text-body">Photo</span>
           </label>
         </div>
 
@@ -62,10 +69,10 @@
             id="emojiMenuButton"
             data-dropdown-toggle="emojiDropdown"
             data-dropdown-placement="bottom-start"
-            class="flex items-center cursor-pointer gap-2 p-2 hover:bg-slate-100 rounded-lg text-sm font-medium"
+            class="group flex items-center cursor-pointer dark:text-body gap-2 p-2 hover:bg-slate-100 dark:hover:bg-neutral-secondary-medium rounded-lg text-sm font-medium"
             type="button"
           >
-            😊 Feeling/activity
+            <span class="transition-transform duration-200 group-hover:scale-125">😊</span> Feeling
           </button>
 
           <div id="emojiDropdown" class="z-40 hidden bg-white rounded-lg shadow-lg">

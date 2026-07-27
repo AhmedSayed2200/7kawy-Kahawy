@@ -7,7 +7,7 @@ import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { IReplies } from '../card-coments/modules/ireplies.interface';
 
 @Component({
-  selector: 'app-replies',
+selector: 'app-replies',
   imports: [PickerComponent,  FormsModule, ReactiveFormsModule],
   templateUrl: './replies.component.html',
   styleUrl: './replies.component.css',

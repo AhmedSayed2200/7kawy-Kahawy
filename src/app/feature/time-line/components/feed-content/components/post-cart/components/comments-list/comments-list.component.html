@@ -1,4 +1,4 @@
-<section class="border border-slate-200 rounded-[16px] p-4 bg-white">
+<section class="border border-slate-200 rounded-[16px] p-4 bg-white dark:bg-neutral-primary-soft">
   @for (comment of commentsList; track comment._id) {
     <app-card-coments
       (eventEmitterComment)="getPostComments(comment.post)"

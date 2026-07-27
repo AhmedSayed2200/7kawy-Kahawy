@@ -1,0 +1,214 @@
+<section class="sticky top-[100px] overflow-hidden w-full">
+  <!-- Navigation Tabs -->
+  <div
+    class="flex border-b border-gray-200 mb-4 bg-gray-50 p-2 rounded-xl dark:bg-neutral-primary-soft"
+  >
+    <button
+      (click)="changeTab('followers')"
+      [ngClass]="{
+        'bg-white dark:text-body dark:bg-neutral-secondary-medium shadow-sm':
+          activeTab === 'followers',
+      }"
+      class="flex-1 py-2 text-center text-xs font-bold rounded-lg transition-all text-gray-500 hover:text-gray-700 dark:hover:text-white"
+    >
+      Followers ({{ followers.length }})
+    </button>
+    <button
+      (click)="changeTab('following')"
+      [ngClass]="{
+        'bg-white shadow-sm dark:text-body dark:bg-neutral-secondary-medium':
+          activeTab === 'following',
+      }"
+      class="flex-1 py-2 text-center text-xs font-bold rounded-lg transition-all text-gray-500 hover:text-gray-700 dark:hover:text-white"
+    >
+      Following ({{ followingList.length }})
+    </button>
+  </div>
+
+  <!-- ----- Followers Tab Content ----- -->
+  @if (activeTab === 'followers') {
+    @if (followers.length) {
+      <div class="mb-[5px]">
+        <div
+          [ngClass]="animationState"
+          class="card-carousel p-4 bg-neutral-primary-soft border border-default rounded-2xl shadow-md hover:shadow-lg transition-all"
+        >
+          <div class="overflow-hidden rounded-xl">
+            <img
+              class="w-full h-[200px] object-cover hover:scale-150 transition-all duration-500"
+              [src]="follower.photo"
+              [alt]="follower.name"
+            />
+          </div>
+          <div class="mt-4 mb-4 px-1">
+            <h2
+              class="text-base font-extrabold tracking-tight dark:text-body text-heading leading-tight mb-2"
+            >
+              {{ follower.name }}
+            </h2>
+
+            <div class="flex items-center gap-2 border-t border-gray-200/60 pt-2 text-xs text-body">
+              <span class="font-medium text-gray-600 dark:text-body">
+                <strong class="text-heading dark:text-body">{{ follower.followersCount }} </strong>
+                followers
+              </span>
+              <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
+              <span class="font-medium text-gray-600 dark:text-body">
+                <strong class="text-heading dark:text-body">{{ follower.followingCount }} </strong>
+                following
+              </span>
+            </div>
+          </div>
+          <div class="flex justify-between gap-3">
+            <button
+              (click)="followUnFollow(follower._id); follower.isFollowed = !follower.isFollowed"
+              type="button"
+              [class]="
+                follower.isFollowed
+                  ? 'bg-gray-600 hover:bg-gray-700'
+                  : 'bg-blue-600 hover:bg-blue-700'
+              "
+              class="inline-flex items-center justify-center gap-1.5 text-white px-4 py-2.5 shadow-sm font-semibold rounded-xl text-xs focus:outline-none transition-all active:scale-95 flex-1"
+            >
+              {{ follower.isFollowed ? 'unFollow' : 'Follow' }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Carousel Arrows -->
+        <div class="flex justify-between items-center mt-3 px-1">
+          <button
+            (click)="prev()"
+            class="inline-flex items-center justify-center w-8 h-8 bg-white border border-gray-200 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-blue-600 active:scale-95 transition-all"
+          >
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.75 19.5L8.25 12l7.5-7.5"
+              />
+            </svg>
+          </button>
+          <span class="text-[13px] font-medium text-gray-400"
+            >Card {{ followerNumber + 1 }} of {{ followers.length }}</span
+          >
+          <button
+            (click)="next()"
+            class="inline-flex items-center justify-center w-8 h-8 bg-white border border-gray-200 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-blue-600 active:scale-95 transition-all"
+          >
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    } @else {
+      <img src="/images/noFollowers.png" alt="" />
+    }
+  }
+  <!-- ----- Following Tab Content ----- -->
+  @if (activeTab === 'following') {
+    @if (followingList.length) {
+      <div class="mb-[5px]">
+        <div
+          [ngClass]="animationState"
+          class="card-carousel p-4 bg-neutral-primary-soft border border-default rounded-2xl shadow-md hover:shadow-lg transition-all"
+        >
+          <div class="overflow-hidden rounded-xl">
+            <img
+              class="w-full h-[200px] object-cover hover:scale-150 transition-all duration-500"
+              [src]="following.photo"
+              [alt]="following.name"
+            />
+          </div>
+          <div class="mt-4 mb-4 px-1">
+            <h2
+              class="text-base dark:text-body font-extrabold tracking-tight text-heading leading-tight mb-2"
+            >
+              {{ following.name }}
+            </h2>
+
+            <div class="flex items-center gap-2 border-t border-gray-200/60 pt-2 text-xs text-body">
+              <span class="font-medium text-gray-600 dark:text-body">
+                <strong class="text-heading dark:text-body">{{ following.followersCount }}</strong>
+                followers
+              </span>
+              <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
+              <span class="font-medium text-gray-600 dark:text-body">
+                <strong class="text-heading dark:text-body">{{ following.followingCount }}</strong>
+                following
+              </span>
+            </div>
+          </div>
+          <div class="flex justify-between gap-3">
+            <button
+              (click)="followUnFollow(following._id); following.isFollowed = !following.isFollowed"
+              type="button"
+              [class]="
+                following.isFollowed
+                  ? 'bg-gray-600 hover:bg-gray-700'
+                  : 'bg-blue-600 hover:bg-blue-700'
+              "
+              class="inline-flex items-center justify-center gap-1.5 text-white px-4 py-2.5 shadow-sm font-semibold rounded-xl text-xs focus:outline-none transition-all active:scale-95 flex-1"
+            >
+              {{ following.isFollowed ? 'unFollow' : 'Follow' }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Carousel Arrows -->
+        <div class="flex justify-between items-center mt-3 px-1">
+          <button
+            (click)="prev()"
+            class="inline-flex items-center justify-center w-8 h-8 dark:text-body dark:bg-neutral-secondary-medium bg-white border border-gray-200 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-blue-600 active:scale-95 transition-all"
+          >
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.75 19.5L8.25 12l7.5-7.5"
+              />
+            </svg>
+          </button>
+          <span class="text-[13px] font-medium text-gray-400"
+            >Card {{ followingNumber + 1 }} of {{ followingList.length }}</span
+          >
+          <button
+            (click)="next()"
+            class="inline-flex items-center justify-center dark:text-body dark:bg-neutral-secondary-medium w-8 h-8 bg-white border border-gray-200 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-blue-600 active:scale-95 transition-all"
+          >
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    } @else {
+      <img src="/images/nofollowing.png" alt="" />
+    }
+  }
+</section>

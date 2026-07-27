@@ -9,16 +9,19 @@
 
     <div class="flex-1 flex flex-col self-center items-start min-w-0">
       @if (!isEditaing) {
-        <div class="bg-slate-100 rounded-2xl px-3.5 py-2.5 w-full">
+        <div
+          class="bg-slate-100 rounded-2xl px-3.5 py-2.5 w-full dark:text-body dark:bg-neutral-secondary-medium"
+        >
           <div class="flex justify-between">
             <div>
               <div class="flex items-center gap-1.5 mb-0.5">
-                <span class="text-[13px] font-bold text-slate-900 hover:underline cursor-pointer">{{
-                  comment.commentCreator.name
-                }}</span>
+                <span
+                  class="text-[13px] font-bold text-slate-900 hover:underline cursor-pointer dark:text-body"
+                  >{{ comment.commentCreator.name }}</span
+                >
               </div>
 
-              <div class="flex items-center gap-1 text-[12px] text-slate-500 mb-1">
+              <div class="flex items-center gap-1 text-[12px] text-slate-500 mb-1 dark:text-body">
                 <span class="me-0.5">@{{ comment.commentCreator.username }}</span>
 
                 <span>{{ comment.createdAt | date: 'shortTime' }}</span>
@@ -69,7 +72,7 @@
             }
           </div>
           @if (comment.content) {
-            <p class="text-[14px] text-slate-800 wrap-break-word">
+            <p class="text-[14px] text-slate-800 wrap-break-word dark:text-body">
               {{ comment.content }}
             </p>
           }
@@ -120,7 +123,10 @@
       }
       <!--editing comment  -->
       @else {
-        <form (submit)="sendComment($event, comment.post, comment._id)">
+        <form
+          (submit)="sendComment($event, comment.post, comment._id)"
+          class="dark:bg-neutral-secondary-medium dark:p-5 dark:rounded-[15px] dark:w-full"
+        >
           <div class="flex">
             <input
               [formControl]="commentContentEditing"

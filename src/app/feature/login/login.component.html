@@ -1,177 +1,184 @@
-<section class="min-h-screen flex flex-wrap justify-center items-center container">
-  <div id="check">
-    <img src="/images/lastman.png" alt="" />
-  </div>
-  <div class="w-full lg:w-1/2 text-center lg:text-left lg:mt-5 mt-20 mb-5 relative">
-    <div id="logo-img" class="absolute">
-      <img src="/images/Gemini_Generated_Image_oyzu70oyzu70oyzu.png" width="80px" alt="" />
+<section class="dark:bg-[#1A2234]">
+  <section class="min-h-screen flex flex-wrap justify-center items-center container">
+    <div id="check" class="hidden md:block md:ms-50 lg:ms-0">
+      <img [src]="ImgUrlSahla" alt="" />
     </div>
-    <h1 class="font-bold text-6xl ms-10">
-      <span><span class="text-mainColor">7</span>kawy</span> و
-      <span class="ps-20 block"><span class="text-mainColor">K</span>ahawy</span>
-    </h1>
-    <p class="font-specialFont py-7 w-full lg:w-4/5">
-      "Ready to embark on a journey that transcends boundaries? Join us at 7kawy and let's create a
-      brighter world together."
-    </p>
-    <div class="gap-x-4 justify-center lg:justify-start w-full flex mb-5 lg:mb-0">
-      <button
-        type="button"
-        class="py-2 px-5 w-[40%] max-w-md flex justify-center items-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
-      >
-        <svg
-          width="20"
-          height="20"
-          fill="currentColor"
-          class="mr-2"
-          viewBox="0 0 1792 1792"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M1343 12v264h-157q-86 0-116 36t-30 108v189h293l-39 296h-254v759h-306v-759h-255v-296h255v-218q0-186 104-288.5t277-102.5q147 0 228 12z"
-          ></path>
-        </svg>
-        Sign in with Facebook
-      </button>
-
-      <button
-        type="button"
-        class="py-2 px-4 w-[40%] max-w-md flex justify-center items-center bg-white hover:bg-gray-50 border border-gray-300 text-gray-700 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
-      >
-        <svg
-          width="20"
-          height="20"
-          fill="currentColor"
-          class="mr-2 text-red-500"
-          viewBox="0 0 1792 1792"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M896 786h725q12 67 12 128 0 217-91 387.5t-259.5 266.5-386.5 96q-157 0-299-60.5t-245-163.5-163.5-245-60.5-299 60.5-299 163.5-245 245-163.5 299-60.5q300 0 515 201l-209 201q-123-119-306-119-129 0-238.5 65t-173.5 176.5-64 243.5 64 243.5 173.5 176.5 238.5 65q87 0 160-24t120-60 82-82 51.5-87 22.5-78h-436v-264z"
-          ></path>
-        </svg>
-        Sign in with Google
-      </button>
-    </div>
-  </div>
-  <form
-    [formGroup]="loginForm"
-    (ngSubmit)="submitDate()"
-    class="bg-white w-full lg:w-1/2 py-10 flex flex-col gap-y-3 mb-20 lg:mb-0"
-  >
-    <h2 class="font-extrabold text-3xl w-3/4 text-center m-auto pb-5">Login In</h2>
-
-    <!--------- ---------- email ------------------------->
-
-    <div>
-      <div class="relative w-3/4 m-auto">
-        <input
-          formControlName="login"
-          type="email"
-          id="login"
-          class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border-1 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-gray-500 peer"
-          placeholder=" "
-        />
-        <label
-          for="login"
-          class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2 peer-focus:px-2 peer-focus:w-fit peer-focus:text-gray-500 peer-focus:bg-white peer-focus:overflow-auto peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
-          ><i class="fa-duotone fa-solid fa-at pe-1"></i> Email or user name
-        </label>
+    <div class="w-full lg:w-1/2 text-center lg:text-left lg:mt-5 mt-20 mb-5 relative">
+      <div id="logo-img" class="absolute hidden lg:block">
+        <img [src]="ImgUrlHakawy" width="80px" alt="" />
       </div>
-      @if (loginForm.get('login')?.touched && loginForm.get('login')?.invalid) {
-        <div
-          class="flex w-3/4 mx-auto my-0 p-3 text-sm text-fg-danger-strong rounded-base bg-danger-soft border border-danger-subtle"
-          role="alert"
+      <h1 class="font-bold text-6xl ms-0 md:ms-10 text-star dark:text-body">
+        <span class="dark:text-body"
+          ><span class="text-mainColor dark:text-white">7</span>kawy</span
         >
-          <span class="sr-only">Danger</span>
-          <div>
-            <ul class="list-disc list-outside space-y-1 ps-2.5">
-              @if (loginForm.get('login')?.hasError('required')) {
-                <li class="[word-spacing:2px]">Email or user name is required.</li>
-              } @else if (loginForm.get('login')?.hasError('minlength')) {
-                <li>must be at least 3 characters</li>
-              }
-            </ul>
-          </div>
-        </div>
-      }
-    </div>
+        و
+        <span class="ps-20 block"><span class="text-mainColor dark:text-white">K</span>ahawy</span>
+      </h1>
+      <p class="font-specialFont py-7 w-full lg:w-4/5 dark:text-body">
+        "Ready to embark on a journey that transcends boundaries? Join us at 7kawy and let's create
+        a brighter world together."
+      </p>
+      <div class="gap-x-4 justify-center lg:justify-start w-full flex mb-5 lg:mb-0">
+        <button
+          type="button"
+          class="py-2 px-5 w-[40%] cursor-pointer max-w-md flex justify-center items-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
+        >
+          <svg
+            width="20"
+            height="20"
+            fill="currentColor"
+            class="mr-2"
+            viewBox="0 0 1792 1792"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M1343 12v264h-157q-86 0-116 36t-30 108v189h293l-39 296h-254v759h-306v-759h-255v-296h255v-218q0-186 104-288.5t277-102.5q147 0 228 12z"
+            ></path>
+          </svg>
+          <span class="hidden md:inline">Sign in with Facebook</span>
+          <span class="md:hidden">Sign in </span>
+        </button>
 
-    <!--------- ---------- password ------------------------->
-
-    <div>
-      <div class="relative w-3/4 m-auto">
-        <input
-          #passwordlogin
-          formControlName="password"
-          type="password"
-          id="password"
-          class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border-1 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-gray-500 peer"
-          placeholder=" "
-        />
-        <label
-          for="password"
-          class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2 peer-focus:px-2 peer-focus:w-fit peer-focus:text-gray-500 peer-focus:bg-white peer-focus:overflow-auto peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
-          ><i class="fa-solid fa-key pe-1"></i> Password
-        </label>
-        @if (loginForm.get('password')?.value) {
-          <span
-            class="absolute top-[50%] end-5 translate-y-[-50%] text-gray-500 cursor-pointer"
-            (click)="disbalypassword(passwordlogin)"
-            ><i
-              [class]="passwordlogin.type === 'password' ? 'fa-eye-slash' : 'fa-eye'"
-              class="fa-solid"
-            ></i
-          ></span>
-        }
+        <button
+          type="button"
+          class="py-2 px-4 w-[40%] cursor-pointer max-w-md flex justify-center items-center bg-white hover:bg-gray-50 border border-gray-300 text-gray-700 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
+        >
+          <svg
+            width="20"
+            height="20"
+            fill="currentColor"
+            class="mr-2 text-red-500"
+            viewBox="0 0 1792 1792"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M896 786h725q12 67 12 128 0 217-91 387.5t-259.5 266.5-386.5 96q-157 0-299-60.5t-245-163.5-163.5-245-60.5-299 60.5-299 163.5-245 245-163.5 299-60.5q300 0 515 201l-209 201q-123-119-306-119-129 0-238.5 65t-173.5 176.5-64 243.5 64 243.5 173.5 176.5 238.5 65q87 0 160-24t120-60 82-82 51.5-87 22.5-78h-436v-264z"
+            ></path>
+          </svg>
+          <span class="hidden md:inline">Sign in with Google</span>
+          <span class="md:hidden">Sign in </span>
+        </button>
       </div>
-      @if (loginForm.get('password')?.touched && loginForm.get('password')?.invalid) {
-        <div
-          class="flex w-3/4 mx-auto my-0 p-3 text-sm text-fg-danger-strong rounded-base bg-danger-soft border border-danger-subtle"
-          role="alert"
-        >
-          <span class="sr-only">Danger</span>
-          <div>
-            <ul class="list-disc list-outside space-y-1 ps-2.5">
-              @if (loginForm.get('password')?.hasError('required')) {
-                <li class="[word-spacing:2px]">password is required.</li>
-              } @else if (loginForm.get('password')?.hasError('pattern')) {
-                <li>
-                  must contain at least 8 chars, 1 uppercase, 1 lowercase, 1 number, and 1 special
-                </li>
-              }
-            </ul>
-          </div>
-        </div>
-      }
     </div>
 
-    <div class="w-3/4 m-auto">
-      <button
-        type="submit"
-        [disabled]="loading"
-        class="bg-mainColor w-full text-white rounded-[.5rem] p-3 cursor-pointer"
-      >
-        Log In
-
-        @if (loading) {
-          <i class="fa-solid fa-spinner animate-spin"></i>
-        }
-      </button>
-
-      <p class="bg-red-500 w-full text-sm text-center">{{ msgError }}</p>
-    </div>
-
-    <button
-      type="button"
-      routerLink="/register"
-      class="px-5 py-2.5 border w-3/4 mx-auto border-gray-600 text-gray-600 bg-transparent font-medium cursor-pointer rounded-[.5rem] text-sm transition-all duration-300 hover:bg-gray-600 hover:text-white"
+    <!----- right side ----->
+    <form
+      [formGroup]="loginForm"
+      (ngSubmit)="submitDate()"
+      class="bg-white w-full lg:w-1/2 py-10 flex flex-col gap-y-3 mb-20 lg:mb-0 dark:dark:bg-[#1A2234] dark:border-body dark:shadow-white dark:rounded-[10px] dark:border"
     >
-      Create a new a count
-    </button>
+      <h2 class="font-extrabold text-3xl w-3/4 text-center m-auto pb-5 dark:text-body">Login In</h2>
 
-    <a class="text-blue-500 block text-center my-1 w-3/4 m-auto" routerLink="/register"
-      >Forgot Password..??
-    </a>
-  </form>
+      <!--------- ---------- email ------------------------->
+
+      <div>
+        <div class="relative w-3/4 m-auto">
+          <input
+            formControlName="login"
+            type="email"
+            id="login"
+            class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border-1 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-gray-500 peer"
+            placeholder=" "
+          />
+          <label
+            for="login"
+            class="absolute text-sm text-gray-500 dark:text-body duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2 peer-focus:px-2 peer-focus:w-fit peer-focus:text-gray-500 peer-focus:bg-white dark:peer-focus:bg-[#1A2234] peer-focus:overflow-auto peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+            ><i class="fa-duotone fa-solid fa-at pe-1"></i> Email or user name
+          </label>
+        </div>
+        @if (loginForm.get('login')?.touched && loginForm.get('login')?.invalid) {
+          <div
+            class="flex w-3/4 mx-auto my-0 p-3 text-sm text-fg-danger-strong rounded-base bg-danger-soft border border-danger-subtle"
+            role="alert"
+          >
+            <span class="sr-only">Danger</span>
+            <div>
+              <ul class="list-disc list-outside space-y-1 ps-2.5">
+                @if (loginForm.get('login')?.hasError('required')) {
+                  <li class="[word-spacing:2px]">Email or user name is required.</li>
+                } @else if (loginForm.get('login')?.hasError('minlength')) {
+                  <li>must be at least 3 characters</li>
+                }
+              </ul>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!--------- ---------- password ------------------------->
+
+      <div>
+        <div class="relative w-3/4 m-auto">
+          <input
+            #passwordlogin
+            formControlName="password"
+            type="password"
+            id="password"
+            class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border-1 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-gray-500 peer"
+            placeholder=" "
+          />
+          <label
+            for="password"
+            class="absolute dark:peer-focus:bg-[#1A2234] dark:text-body text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2 peer-focus:px-2 peer-focus:w-fit peer-focus:text-gray-500 peer-focus:bg-white peer-focus:overflow-auto peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+            ><i class="fa-solid fa-key pe-1"></i> Password
+          </label>
+          @if (loginForm.get('password')?.value) {
+            <span
+              class="absolute top-[50%] end-5 translate-y-[-50%] text-gray-500 cursor-pointer"
+              (click)="disbalypassword(passwordlogin)"
+              ><i
+                [class]="passwordlogin.type === 'password' ? 'fa-eye-slash' : 'fa-eye'"
+                class="fa-solid"
+              ></i
+            ></span>
+          }
+        </div>
+        @if (loginForm.get('password')?.touched && loginForm.get('password')?.invalid) {
+          <div
+            class="flex w-3/4 mx-auto my-0 p-3 text-sm text-fg-danger-strong rounded-base bg-danger-soft border border-danger-subtle"
+            role="alert"
+          >
+            <span class="sr-only">Danger</span>
+            <div>
+              <ul class="list-disc list-outside space-y-1 ps-2.5">
+                @if (loginForm.get('password')?.hasError('required')) {
+                  <li class="[word-spacing:2px]">password is required.</li>
+                } @else if (loginForm.get('password')?.hasError('pattern')) {
+                  <li>
+                    must contain at least 8 chars, 1 uppercase, 1 lowercase, 1 number, and 1 special
+                  </li>
+                }
+              </ul>
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="w-3/4 m-auto">
+        <button
+          type="submit"
+          [disabled]="loading"
+          class="bg-mainColor w-full text-white rounded-[.5rem] p-3 cursor-pointer"
+        >
+          Log In
+
+          @if (loading) {
+            <i class="fa-solid fa-spinner animate-spin"></i>
+          }
+        </button>
+
+        <p class="bg-red-500 w-full text-sm text-center">{{ msgError }}</p>
+      </div>
+
+      <button
+        type="button"
+        routerLink="/register"
+        class="px-5 dark:text-body py-2.5 border w-3/4 mx-auto border-gray-600 text-gray-600 bg-transparent font-medium cursor-pointer rounded-[.5rem] text-sm transition-all duration-300 hover:bg-gray-600 hover:text-white"
+      >
+        Create a new a count
+      </button>
+
+      <a class="text-blue-500 block text-center my-1 w-3/4 m-auto">Forgot Password..?? </a>
+    </form>
+  </section>
 </section>

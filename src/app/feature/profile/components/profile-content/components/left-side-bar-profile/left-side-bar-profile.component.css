@@ -1,0 +1,30 @@
+/* الكلاس الأساسي للكارت */
+.card-carousel {
+  transition:
+    transform 0.25s ease-in-out,
+    opacity 0.25s ease-in-out;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.card-carousel.exit-left {
+  transform: translateX(-100px);
+  opacity: 0;
+}
+
+.card-carousel.exit-right {
+  transform: translateX(100px);
+  opacity: 0;
+}
+
+.card-carousel.enter-left {
+  transform: translateX(-100px);
+  opacity: 0;
+  transition: none;
+}
+
+.card-carousel.enter-right {
+  transform: translateX(100px);
+  opacity: 0;
+  transition: none;
+}

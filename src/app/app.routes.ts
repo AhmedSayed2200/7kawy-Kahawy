@@ -13,6 +13,8 @@ import { ChangePasswordComponent } from './feature/change-password/change-passwo
 import { FeedContentComponent } from './feature/time-line/components/feed-content/feed-content.component';
 import { SuggestionsFriendsComponent } from './feature/time-line/components/suggestions-friends/suggestions-friends.component';
 import { BookMarksComponent } from './feature/time-line/components/book-marks/book-marks.component';
+import { PostDetailsComponent } from './feature/post-details/post-details.component';
+import { FeedPostsComponent } from './feature/time-line/components/feed-posts/feed-posts.component';
 
 export const routes: Routes = [
     {
@@ -40,16 +42,22 @@ export const routes: Routes = [
                     },
                     {
                         path: "saved-posts",component:BookMarksComponent,title:"BookMarks",
+                    },
+                    {
+                        path: "feed-posts",component:FeedPostsComponent,title:"feed-posts"
                     }
                 ]
             },
             {
                 path: "notification",component:NotificationComponent,title:"Notification"
             },            {
-                path: "profile",component:ProfileComponent,title:"Profile"
+                path: "profile/:id",component:ProfileComponent,title:"Profile"
             },
             {
                 path: "Change Password",component:ChangePasswordComponent,title:"Change Password"
+            },
+            {
+                path: "details/:id",component:PostDetailsComponent,title:"Post Details"
             }
         ]
     },

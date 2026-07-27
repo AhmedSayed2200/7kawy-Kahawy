@@ -1,7 +1,7 @@
 // import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from "@angular/router";
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-import { Component, inject, ChangeDetectorRef } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { empty, Subscription } from 'rxjs';
 import { AuthService } from '../../core/Auth/services/auth.service';
 @Component({
@@ -17,6 +17,7 @@ export class RegisterComponent {
   private readonly router=inject(Router)
   msgError:string=""
   loading:boolean = false;
+  ImgUrl:string="";
   registerSubscribe:Subscription=new Subscription();
   registerForm: FormGroup =new FormGroup({
     name: new FormControl("",[Validators.required,Validators.minLength(3),Validators.maxLength(30)]),
@@ -27,6 +28,14 @@ export class RegisterComponent {
     password:new FormControl("",[Validators.required , Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/)]),
     rePassword:new FormControl("",[Validators.required])
   },{validators:[this.rePasswordValidation]})
+
+  ngOnInit(): void {
+
+    this.setImgsByTheme()
+  }
+  setImgsByTheme(){
+   this.ImgUrl= localStorage.getItem("theme")==='dark'?"/images/HelloDark.png":"/images/lastman2.png";
+  }
   submitDate(){
     if(this.registerForm.valid){
       this.loading=true;

@@ -1,0 +1,7 @@
+@for (post of postList; track post._id) {
+  <app-post-cart (EventEmitterBookmarks)="getAllFollowingPost()" [post]="post"></app-post-cart>
+} @empty {
+  <div class="flex justify-center items-center h-full">
+    <img class="w-[60%]" src="/images/nopostsfollowing.png" alt="" />
+  </div>
+}

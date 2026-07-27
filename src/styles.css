@@ -2,17 +2,19 @@
 @import 'flowbite/src/themes/default';
 @plugin "flowbite/plugin";
 @source "../node_modules/flowbite";
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   --color-mainColor: #00298d;
   --color-secondColor: #f0f2f5;
+  --color-darkBg: #101828;
+
   --font-specialFont: 'Lobster', sans-serif;
 }
 @utility container {
   margin: auto;
 }
 body {
-  background-color: var(--color-secondColor);
   font-family: 'Plus Jakarta Sans', sans-serif;
 }
 input[type='password']::-ms-reveal {
@@ -21,7 +23,6 @@ input[type='password']::-ms-reveal {
 input[type='password']::-ms-clear {
   display: none;
 }
-/* إخفاء الـ scrollbar عشان يظهر التصميم متناسق وسلس */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
