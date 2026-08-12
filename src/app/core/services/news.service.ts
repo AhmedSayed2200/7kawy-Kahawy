@@ -17,9 +17,11 @@ getTopHeadlines(
   ): string {
     return `top-headlines?category=${category}&lang=${lang}&max=10&apikey=${this.apiKey}`;
   }
-   getNews(detailsData:string): Observable<any>{
-   return this.httpClient.get(this.baseUrl+detailsData);
-   }
+getNews(detailsData: string): Observable<any> {
+  const fullUrl = this.baseUrl + detailsData;
+  const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(fullUrl)}`;
+  return this.httpClient.get(proxyUrl);
+}
 
   
    
