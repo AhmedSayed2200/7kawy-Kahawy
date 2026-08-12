@@ -33,7 +33,7 @@ export class LoginComponent {
   }
   setImgsByTheme(){
    this.ImgUrlHakawy= localStorage.getItem("theme")==='dark'?"/images/7akawyBlack.png":"/images/7kawywhite.png";
-   this.ImgUrlSahla= localStorage.getItem("theme")==='dark'?"/images/HelloDark.png":"/images/lastman2.png";
+   this.ImgUrlSahla= localStorage.getItem("theme")==='dark'?"/images/lastman.png":"/images/lastman2.png";
   }
 
   submitDate(){

@@ -13,17 +13,17 @@ export class RigthSideBarComponent  {
 @ViewChild('sliderContainer') sliderContainer!: ElementRef<HTMLDivElement>;
   private readonly newsService=inject(NewsService);
 articles: any[] = [];
-// ngOnInit(): void {
-//     this.newsService.getNews(this.newsService.getTopHeadlines()).subscribe({
-//       next: (res) => {
-//         console.log("Data received successfully:", res);
-//         this.articles = res.articles || [];
-//       },
-//       error: (err) => {
-//         console.error("API Error:", err);
-//       }
-//     });
-//   }
+ngOnInit(): void {
+    this.newsService.getNews(this.newsService.getTopHeadlines()).subscribe({
+      next: (res) => {
+        console.log("Data received successfully:", res);
+        this.articles = res.articles || [];
+      },
+      error: (err) => {
+        console.error("API Error:", err);
+      }
+    });
+  }
   scrollSlider(offset: number): void {
     if (this.sliderContainer) {
       this.sliderContainer.nativeElement.scrollLeft += offset;
